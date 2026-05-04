@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DineFlex | Irish Dining Deals & Reservations</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        burgundy: '#8B1E3F',
+                        gold: '#E3B23C',
+                        charcoal: '#333333',
+                        offwhite: '#F9F7F3',
+                        success: '#4CAF50',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'slide-up': 'slideUp 0.4s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F9F7F3; font-family: 'Inter', sans-serif; }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .filter-btn-active {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="text-charcoal antialiased">
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 glass-nav">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="#" class="flex items-center group">
+                <h1 class="text-burgundy text-3xl font-bold tracking-tight">
+                    Dine<span class="text-gold">Flex</span>
+                </h1>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8">
+                <ul class="flex gap-8 font-medium">
+                    <li><a href="#" class="text-burgundy relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-burgundy">Restaurants</a></li>
+                    <li><a href="#" class="hover:text-burgundy transition-colors">About</a></li>
+                </ul>
+                <button onclick="toggleAuthModal(true)" class="border-2 border-burgundy text-burgundy px-6 py-2 rounded-lg font-semibold hover:bg-burgundy hover:text-white transition-all flex items-center gap-2">
+                    <i data-lucide="log-in" class="w-4 h-4"></i>
+                    Sign In
+                </button>
+            </nav>
+
+            <!-- Mobile Menu Toggles -->
+            <div class="md:hidden flex items-center gap-3">
+                <button class="text-burgundy border border-burgundy p-2 rounded-lg"><i data-lucide="user" class="w-5 h-5"></i></button>
+                <button onclick="toggleMobileMenu()" class="text-charcoal"><i data-lucide="menu" class="w-7 h-7"></i></button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 right-0 bg-white shadow-xl p-4 animate-fade-in border-t border-gray-100">
+            <ul class="flex flex-col gap-4 font-medium">
+                <li><a href="#" class="text-burgundy block py-2">Restaurants</a></li>
+                <li><a href="#" class="hover:text-burgundy block py-2">About</a></li>
+                <li><button onclick="toggleAuthModal(true)" class="w-full text-left py-2 text-burgundy font-bold">Sign In</button></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="pt-32 pb-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-3xl mx-auto mb-12 animate-slide-up">
+                <h2 class="text-4xl md:text-6xl font-black mb-4 leading-tight">
+                    Find Your Perfect <span class="text-burgundy">Dining</span> Experience
+                </h2>
+                <p class="text-lg text-gray-500 font-medium">
+                    Discover restaurants offering early bird and last-minute dining deals across Ireland.
+                </p>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="max-w-2xl mx-auto mb-16 animate-slide-up" style="animation-delay: 0.1s;">
+                <div class="relative mb-8 group">
+                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-burgundy transition-colors"></i>
+                    <input type="text" id="restaurant-search" placeholder="Search restaurants, cuisines, or locations" 
+                        class="w-full h-14 pl-12 pr-4 rounded-2xl bg-white border-2 border-transparent shadow-sm focus:border-burgundy/20 focus:ring-0 focus:outline-none transition-all shadow-md group-hover:shadow-lg">
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-3" id="filters">
+                    <button onclick="setFilter('all')" class="filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all bg-charcoal text-white filter-btn-active" data-filter="all">All Restaurants</button>
+                    <button onclick="setFilter('early')" class="filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all bg-white text-burgundy border border-burgundy/10 hover:bg-gray-50" data-filter="early">Early Bird Offers</button>
+                    <button onclick="setFilter('last')" class="filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all bg-white text-charcoal border border-gray-200 hover:bg-gray-50" data-filter="last">Last Minute Deals</button>
+                </div>
+            </div>
+
+            <!-- Restaurant Grid -->
+            <div id="restaurant-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Cards Injected by JS -->
+                <div class="col-span-full py-20 flex flex-col items-center justify-center space-y-4 shimmer rounded-3xl h-96">
+                    <p class="text-gray-400 font-medium italic">Loading the best tables for you...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <h1 class="text-burgundy text-3xl font-bold mb-6">Dine<span class="text-gold">Flex</span></h1>
+                    <p class="text-gray-500 max-w-sm mb-6 leading-relaxed">
+                        Connecting food lovers with the finest dining experiences and exclusive offers across Ireland. 
+                        Flexible bookings, premium deals, unforgettable meals.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-offwhite flex items-center justify-center text-charcoal hover:bg-burgundy hover:text-white transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-offwhite flex items-center justify-center text-charcoal hover:bg-burgundy hover:text-white transition-all"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-offwhite flex items-center justify-center text-charcoal hover:bg-burgundy hover:text-white transition-all"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 uppercase tracking-wider text-xs">Platform</h4>
+                    <ul class="space-y-4 text-gray-500 font-medium">
+                        <li><a href="#" class="hover:text-burgundy transition-colors">Restaurants</a></li>
+                        <li><a href="#" class="hover:text-burgundy transition-colors">Special Offers</a></li>
+                        <li><a href="#" class="hover:text-burgundy transition-colors">Booking Guide</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 uppercase tracking-wider text-xs">Quick Links</h4>
+                    <ul class="space-y-4 text-gray-500 font-medium">
+                        <li><a href="#" class="hover:text-burgundy transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-burgundy transition-colors">Contact Support</a></li>
+                        <li><a href="#" class="hover:text-burgundy transition-colors">Partner With Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-100 text-center text-sm text-gray-400">
+                <p>&copy; 2024 DineFlex. Proudly built for the Irish dining community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 modal-overlay animate-fade-in">
+        <div class="bg-white w-full max-w-md rounded-3xl overflow-hidden shadow-2xl relative animate-slide-up">
+            <button onclick="toggleAuthModal(false)" class="absolute top-4 right-4 p-2 text-gray-400 hover:text-charcoal"><i data-lucide="x"></i></button>
+            
+            <div class="p-8">
+                <div class="text-center mb-8">
+                    <h3 class="text-2xl font-bold mb-1">Account Access</h3>
+                    <p class="text-sm text-gray-500 uppercase tracking-widest font-bold">Velvet Dining experience</p>
+                </div>
+
+                <!-- Tabs -->
+                <div class="flex gap-2 p-1 bg-gray-100 rounded-xl mb-8">
+                    <button onclick="switchTab('login')" id="tab-login" class="flex-1 py-2 font-bold rounded-lg bg-white shadow-sm text-burgundy transition-all">Sign In</button>
+                    <button onclick="switchTab('register')" id="tab-register" class="flex-1 py-2 font-bold rounded-lg text-gray-400 transition-all">Register</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="form-login" class="space-y-4">
+                    <button class="w-full h-12 border border-gray-200 rounded-xl flex items-center justify-center gap-3 font-semibold hover:bg-gray-50 transition-colors">
+                        <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" class="w-5 h-5" alt="">
+                        Continue with Google
+                    </button>
+                    <div class="flex items-center gap-4 py-2">
+                        <div class="h-px flex-1 bg-gray-100"></div>
+                        <span class="text-[10px] uppercase font-bold text-gray-300">Or email</span>
+                        <div class="h-px flex-1 bg-gray-100"></div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Email Address</label>
+                        <input type="email" placeholder="you@dineflex.ie" class="w-full h-12 px-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-burgundy/20 focus:ring-0 focus:outline-none transition-all">
+                    </div>
+                    <div class="pb-2">
+                        <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Password</label>
+                        <input type="password" class="w-full h-12 px-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-burgundy/20 focus:ring-0 focus:outline-none transition-all">
+                    </div>
+                    <button class="w-full h-14 bg-burgundy text-white rounded-2xl font-bold text-lg shadow-lg shadow-burgundy/20 hover:scale-[1.02] active:scale-[0.98] transition-all">Sign In</button>
+                </div>
+
+                <!-- Shared for Preview -->
+                <div id="form-register" class="hidden space-y-4 animate-fade-in">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Full Name</label>
+                        <input type="text" placeholder="Ciaran O'Sullivan" class="w-full h-12 px-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-burgundy/20 focus:ring-0 focus:outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Email Address</label>
+                        <input type="email" placeholder="ciaran@email.com" class="w-full h-12 px-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-burgundy/20 focus:ring-0 focus:outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-2 uppercase">Phone</label>
+                        <input type="tel" placeholder="+353 87 123 4567" class="w-full h-12 px-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-burgundy/20 focus:ring-0 focus:outline-none transition-all">
+                    </div>
+                    <button class="w-full h-14 bg-gold text-charcoal rounded-2xl font-bold text-lg shadow-lg shadow-gold/20 hover:scale-[1.02] active:scale-[0.98] transition-all">Create Account</button>
+                    <p class="text-center text-[10px] text-gray-400 px-10 leading-relaxed font-medium">By registering, you agree to our Terms of Service and Privacy Policy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Sample Restaurant Data (Ireland Focus)
+        const restaurants = [
+            { id: 1, name: "The Dublin Grille", location: "Dublin 2", cuisine: "European", hasEarlyBird: true, hasLastMinute: true, image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800" },
+            { id: 2, name: "Galway Bay Oyster Bar", location: "Salthill, Galway", cuisine: "Seafood", hasEarlyBird: true, hasLastMinute: false, image: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800" },
+            { id: 3, name: "The Cork Bistro", location: "Cork City", cuisine: "French", hasEarlyBird: false, hasLastMinute: true, image: "https://images.unsplash.com/photo-1550966842-2849a28b0871?w=800" },
+            { id: 4, name: "Kilkenny Kitchen", location: "County Kilkenny", cuisine: "Irish Modern", hasEarlyBird: true, hasLastMinute: true, image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800" },
+            { id: 5, name: "Limerick Lane", location: "Limerick City", cuisine: "Italian", hasEarlyBird: true, hasLastMinute: false, image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800" },
+            { id: 6, name: "The Waterfront", location: "Waterford Quay", cuisine: "Contemporary", hasEarlyBird: false, hasLastMinute: true, image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800" },
+            { id: 7, name: "Emerald Steakhouse", location: "Belfast", cuisine: "Steakhouse", hasEarlyBird: true, hasLastMinute: true, image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?w=800" },
+            { id: 8, name: "Westport Wilds", location: "Mayo Coastal", cuisine: "Gastropub", hasEarlyBird: false, hasLastMinute: true, image: "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?w=800" }
+        ];
+
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // Core UI Logic
+        function renderGrid() {
+            const grid = document.getElementById('restaurant-grid');
+            const filtered = restaurants.filter(r => {
+                const matchesSearch = r.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                     r.location.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                     r.cuisine.toLowerCase().includes(searchQuery.toLowerCase());
+                
+                const matchesFilter = currentFilter === 'all' || 
+                                     (currentFilter === 'early' && r.hasEarlyBird) || 
+                                     (currentFilter === 'last' && r.hasLastMinute);
+                
+                return matchesSearch && matchesFilter;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-20 text-center text-gray-400 font-medium">No dining experiences found matching your search.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(r => `
+                <div class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 animate-slide-up h-full flex flex-col cursor-pointer border border-gray-100">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="${r.image}" alt="${r.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-charcoal mb-1 group-hover:text-burgundy transition-colors">${r.name}</h3>
+                        <div class="flex items-center text-sm text-gray-500 font-medium mb-6">
+                            <span>${r.location}</span>
+                            <span class="mx-2 opacity-30">•</span>
+                            <span>${r.cuisine}</span>
+                        </div>
+                        <div class="mt-auto flex gap-2">
+                            ${r.hasEarlyBird ? '<span class="px-3 py-1 bg-burgundy text-white text-[10px] font-black uppercase tracking-widest rounded-full">Early Bird</span>' : ''}
+                            ${r.hasLastMinute ? '<span class="px-3 py-1 bg-gold text-charcoal text-[10px] font-black uppercase tracking-widest rounded-full">Last Minute</span>' : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Search & Filter Listeners
+        document.getElementById('restaurant-search').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderGrid();
+        });
+
+        window.setFilter = (type) => {
+            currentFilter = type;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-charcoal', 'bg-burgundy', 'bg-gold', 'text-white', 'text-charcoal', 'filter-btn-active');
+                if (btn.dataset.filter === 'all') {
+                    btn.classList.add('bg-white', 'text-charcoal', 'border-gray-200');
+                } else if (btn.dataset.filter === 'early') {
+                   btn.classList.add('bg-white', 'text-burgundy', 'border-burgundy/10');
+                } else {
+                   btn.classList.add('bg-white', 'text-charcoal', 'border-gray-200');
+                }
+            });
+
+            const activeBtn = document.querySelector(`.filter-btn[data-filter="${type}"]`);
+            activeBtn.classList.remove('bg-white', 'border-gray-200', 'border-burgundy/10');
+            if (type === 'all') {
+                activeBtn.classList.add('bg-charcoal', 'text-white', 'filter-btn-active');
+            } else if (type === 'early') {
+                activeBtn.classList.add('bg-burgundy', 'text-white', 'filter-btn-active');
+            } else {
+                activeBtn.classList.add('bg-gold', 'text-charcoal', 'filter-btn-active');
+            }
+
+            renderGrid();
+        };
+
+        // Header Scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-md', 'py-2');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.remove('shadow-md', 'py-2');
+                header.classList.add('py-4');
+            }
+        });
+
+        // Toggle Helpers
+        window.toggleMobileMenu = () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        };
+
+        window.toggleAuthModal = (show) => {
+            const modal = document.getElementById('auth-modal');
+            modal.classList.toggle('hidden', !show);
+            document.body.classList.toggle('overflow-hidden', show);
+        };
+
+        window.switchTab = (tab) => {
+            const isLogin = tab === 'login';
+            document.getElementById('form-login').classList.toggle('hidden', !isLogin);
+            document.getElementById('form-register').classList.toggle('hidden', isLogin);
+            
+            document.getElementById('tab-login').classList.toggle('bg-white', isLogin);
+            document.getElementById('tab-login').classList.toggle('shadow-sm', isLogin);
+            document.getElementById('tab-login').classList.toggle('text-burgundy', isLogin);
+            document.getElementById('tab-login').classList.toggle('text-gray-400', !isLogin);
+
+            document.getElementById('tab-register').classList.toggle('bg-white', !isLogin);
+            document.getElementById('tab-register').classList.toggle('shadow-sm', !isLogin);
+            document.getElementById('tab-register').classList.toggle('text-gold', !isLogin);
+            document.getElementById('tab-register').classList.toggle('text-gray-400', isLogin);
+        };
+
+        // Initialize
+        setTimeout(() => {
+            lucide.createIcons();
+            renderGrid();
+        }, 800);
+    </script>
+</body>
+</html>

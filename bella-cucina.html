@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bella Cucina - Authentic Italian Cuisine</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&family=Cinzel:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2E8B57', // Sea Green
+                        secondary: '#FF8C00', // Dark Orange
+                        accent: '#3CB371', // Medium Sea Green
+                        light: '#F5FFF5', // Light background
+                        dark: '#2C3E50', // Dark text
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        cursive: ['Dancing Script', 'cursive'],
+                        serif: ['Cinzel', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .cursive-font {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #2E8B57 0%, #FF8C00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-primary {
+            background-color: #2E8B57;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #3CB371;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #FF8C00;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e67e00;
+            transform: translateY(-2px);
+        }
+
+        .glass-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(46, 139, 87, 0.12);
+        }
+
+        .smooth-transition {
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F5FFF5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2E8B57;
+            border-radius: 5px;
+        }
+
+        /* Section transitions */
+        section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modal transitions */
+        .modal {
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Gallery zoom */
+        .gallery-item img {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body class="bg-light text-dark overflow-x-hidden">
+
+    <!-- Navbar -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 py-3 md:py-4 transition-transform duration-300">
+        <div class="container mx-auto px-4">
+            <div class="w-full glass-card rounded-2xl shadow-xl flex items-center justify-between h-20 px-6 md:px-8">
+                <!-- Logo -->
+                <a href="#hero"
+                    class="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text cursive-font no-underline hover:scale-105 transition-transform">
+                    Bella Cucina
+                </a>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden lg:flex items-center space-x-2">
+                    <a href="#about"
+                        class="text-dark hover:text-primary font-bold transition-colors relative group py-2 px-4 text-xl">
+                        About
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-1 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#menu"
+                        class="text-dark hover:text-primary font-bold transition-colors relative group py-2 px-4 text-xl">
+                        Menu
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-1 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#gallery"
+                        class="text-dark hover:text-primary font-bold transition-colors relative group py-2 px-4 text-xl">
+                        Gallery
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-1 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact"
+                        class="text-dark hover:text-primary font-bold transition-colors relative group py-2 px-4 text-xl">
+                        Contact
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-1 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </nav>
+
+                <!-- Mobile Button -->
+                <button id="menu-toggle" class="lg:hidden text-dark focus:outline-none">
+                    <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu"
+            class="lg:hidden fixed inset-x-4 top-24 glass-card p-6 hidden flex-col space-y-4 shadow-2xl z-50">
+            <a href="#about" class="text-dark font-bold text-xl py-2 border-b border-gray-100">About Us</a>
+            <a href="#menu" class="text-dark font-bold text-xl py-2 border-b border-gray-100">Menu</a>
+            <a href="#gallery" class="text-dark font-bold text-xl py-2 border-b border-gray-100">Gallery</a>
+            <a href="#contact" class="text-dark font-bold text-xl py-2">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="h-screen w-full flex items-center justify-center relative overflow-hidden visible">
+        <!-- Background Slider -->
+        <div id="hero-bg-container" class="absolute inset-0 z-0">
+            <div class="bg-gradient-to-r from-primary/20 to-secondary/20 w-full h-full absolute z-10"></div>
+            <div id="hero-bg" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-40"
+                style="background-image: url('https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=2070&q=80')">
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-20 text-center">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 cursive-font gradient-text drop-shadow-lg">Bella Cucina</h1>
+            <p class="text-2xl md:text-4xl text-dark mb-8 font-medium">Authentic Italian Cuisine</p>
+            <p class="text-lg md:text-2xl text-dark/90 mb-12 max-w-3xl mx-auto leading-relaxed">
+                Experience the rich flavors of Italy with our handcrafted dishes made from locally sourced ingredients
+                and traditional recipes.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="#menu" class="btn-primary text-white font-bold py-4 px-10 rounded-full text-xl shadow-lg">View
+                    Our Menu</a>
+                <a href="#contact"
+                    class="btn-secondary text-white font-bold py-4 px-10 rounded-full text-xl shadow-lg">Visit Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-light">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-bold mb-6 cursive-font gradient-text">About Us</h2>
+                <p class="text-xl text-dark/70 max-w-3xl mx-auto">Discover the passion and tradition behind our culinary
+                    journey.</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2 relative group">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
+                        class="rounded-3xl shadow-2xl w-full h-[500px] object-cover group-hover:scale-105 transition-transform duration-700"
+                        alt="Restaurant interior">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark/40 to-transparent rounded-3xl"></div>
+                </div>
+                <div class="lg:w-1/2 space-y-8">
+                    <h3 class="text-3xl md:text-4xl font-bold text-dark cursive-font">Our Story Since 1995</h3>
+                    <div id="story-container" class="space-y-4">
+                        <p id="story-text" class="text-lg text-dark/80 leading-relaxed italic">
+                            "Founded with a passion for genuine Italian flavors, Bella Cucina began in a small kitchen
+                            with traditional family recipes passed down through generations."
+                        </p>
+                        <button id="next-story" class="text-primary font-bold flex items-center gap-2 hover:underline">
+                            Read More <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-primary/10 p-4 rounded-full text-primary"><svg class="w-6 h-6"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd"></path>
+                                </svg></div>
+                            <span class="font-bold">Fresh Ingredients</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="bg-primary/10 p-4 rounded-full text-primary"><svg class="w-6 h-6"
+                                    fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd"></path>
+                                </svg></div>
+                            <span class="font-bold">Family Recipes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chefs Grid -->
+            <div class="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-6 rounded-3xl text-center group">
+                    <img src="https://images.unsplash.com/photo-1583394238182-6f3ad43964a1?w=400&auto=format&fit=crop"
+                        class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-primary group-hover:scale-110 transition-transform object-cover shadow-lg"
+                        alt="Chef Giovanni">
+                    <h4 class="text-2xl font-bold mb-2">Giovanni Rossi</h4>
+                    <p class="text-primary font-bold mb-4">Pastry Chef</p>
+                    <p class="text-dark/70">Master of traditional Italian desserts and artisan sourdough bread.</p>
+                </div>
+                <div class="glass-card p-6 rounded-3xl text-center group">
+                    <img src="https://images.unsplash.com/photo-1595273670150-db0c3c392b46?w=400&auto=format&fit=crop"
+                        class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-secondary group-hover:scale-110 transition-transform object-cover shadow-lg"
+                        alt="Chef Maria">
+                    <h4 class="text-2xl font-bold mb-2">Maria Romano</h4>
+                    <p class="text-secondary font-bold mb-4">Head Chef</p>
+                    <p class="text-dark/70">Bringing flavor and creativity from the heart of Tuscany to your table.</p>
+                </div>
+                <div class="glass-card p-6 rounded-3xl text-center group">
+                    <img src="https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?w=400&auto=format&fit=crop"
+                        class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-primary group-hover:scale-110 transition-transform object-cover shadow-lg"
+                        alt="Chef Marco">
+                    <h4 class="text-2xl font-bold mb-2">Marco Bianchi</h4>
+                    <p class="text-primary font-bold mb-4">Main Course Expert</p>
+                    <p class="text-dark/70">Expert in wood-fired pizza and authentic homemade pasta sauces.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section (Interactive) -->
+    <section id="menu" class="py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-bold mb-6 cursive-font gradient-text">Our Menu</h2>
+                <div class="flex flex-wrap justify-center gap-4 mt-8" id="menu-filters">
+                    <button data-filter="all"
+                        class="filter-btn active bg-primary text-white font-bold py-2 px-6 rounded-full shadow-md">All</button>
+                    <button data-filter="breakfast"
+                        class="filter-btn bg-gray-100 text-dark font-bold py-2 px-6 rounded-full hover:bg-gray-200">Breakfast</button>
+                    <button data-filter="lunch"
+                        class="filter-btn bg-gray-100 text-dark font-bold py-2 px-6 rounded-full hover:bg-gray-200">Lunch</button>
+                    <button data-filter="dinner"
+                        class="filter-btn bg-gray-100 text-dark font-bold py-2 px-6 rounded-full hover:bg-gray-200">Dinner</button>
+                    <button data-filter="specials"
+                        class="filter-btn bg-gray-100 text-dark font-bold py-2 px-6 rounded-full hover:bg-gray-200">Specials</button>
+                </div>
+            </div>
+
+            <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Items injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 bg-light">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-bold mb-4 cursive-font gradient-text">Visual Gallery</h2>
+                <p class="text-xl text-dark/70">A glimpse into the artisan culinary experience.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery-grid">
+                <!-- Images injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative overflow-hidden flex items-center justify-center min-h-screen">
+        <div id="contact-bg" class="absolute inset-0 bg-cover bg-center opacity-30 z-0"
+            style="background-image: url('https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=2070&q=80')">
+        </div>
+        <div class="bg-gradient-to-br from-primary/10 to-secondary/10 absolute inset-0 z-10"></div>
+
+        <div class="container mx-auto px-4 relative z-20">
+            <div
+                class="glass-card p-10 md:p-16 rounded-3xl shadow-2xl max-w-5xl mx-auto flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 cursive-font gradient-text">Visit Us</h2>
+                    <p class="text-lg mb-8">Ready to taste Italy? Contact us for reservations or special events.</p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <span class="text-primary"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z">
+                                    </path>
+                                </svg></span>
+                            <p class="font-medium">123 Culinary St, Authentic City, IT 54321</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="text-primary"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z">
+                                    </path>
+                                </svg></span>
+                            <p class="font-medium">+1 234 567 890</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <span class="text-primary"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z">
+                                    </path>
+                                </svg></span>
+                            <div class="font-medium">
+                                <p>Mon - Fri: 11:00 AM - 10:00 PM</p>
+                                <p>Sat - Sun: 10:00 AM - 11:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Contact Form -->
+                <div class="md:w-1/2">
+                    <form class="space-y-6">
+                        <input type="text" placeholder="Your Name"
+                            class="w-full p-4 rounded-xl border border-primary/20 bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary shadow-sm">
+                        <input type="email" placeholder="Your Email"
+                            class="w-full p-4 rounded-xl border border-primary/20 bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary shadow-sm">
+                        <textarea placeholder="Your Message" rows="5"
+                            class="w-full p-4 rounded-xl border border-primary/20 bg-white/50 focus:outline-none focus:ring-2 focus:ring-primary shadow-sm"></textarea>
+                        <button type="submit"
+                            class="w-full btn-primary text-white font-bold py-4 rounded-xl shadow-lg">Send
+                            Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light py-12 border-t border-primary/10">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold gradient-text cursive-font mb-8">Bella Cucina</h2>
+            <div class="flex justify-center gap-8 mb-8 text-dark font-bold">
+                <a href="#about" class="hover:text-primary transition-colors">About</a>
+                <a href="#menu" class="hover:text-primary transition-colors">Menu</a>
+                <a href="#gallery" class="hover:text-primary transition-colors">Gallery</a>
+                <button id="open-terms" class="hover:text-primary transition-colors">Terms</button>
+                <button id="open-privacy" class="hover:text-primary transition-colors">Privacy</button>
+            </div>
+            <p class="text-dark/50">&copy; 2026 Bella Cucina. All rights reserved. Handcrafted Italian flavors.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Menu Detail Modal -->
+    <div id="menu-modal" class="modal fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80">
+        <div
+            class="glass-card max-w-4xl w-full rounded-3xl overflow-hidden relative animate-in fade-in zoom-in duration-300">
+            <button id="close-menu-modal"
+                class="absolute top-4 right-4 bg-white/20 p-2 rounded-full text-white hover:bg-white/40 z-10">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div class="flex flex-col md:flex-row h-full">
+                <div class="md:w-1/2">
+                    <img id="modal-img" src="" class="w-full h-full object-cover min-h-[300px]" alt="Menu item">
+                </div>
+                <div class="md:w-1/2 p-8 md:p-12 space-y-6 overflow-y-auto max-h-[70vh]">
+                    <span id="modal-category"
+                        class="bg-primary/10 text-primary py-1 px-4 rounded-full font-bold uppercase text-xs">Category</span>
+                    <h3 id="modal-title" class="text-4xl font-bold cursive-font gradient-text">Item Name</h3>
+                    <p id="modal-desc" class="text-lg text-dark/80 leading-relaxed"></p>
+                    <div class="flex justify-between items-center py-4 border-y border-gray-100">
+                        <span id="modal-price" class="text-3xl font-bold text-dark">$0.00</span>
+                        <span id="modal-calories" class="text-dark/60 font-medium">0 Calories</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-2">Key Ingredients:</h4>
+                        <p id="modal-ingredients" class="text-dark/70"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="modal fixed inset-0 z-[100] flex items-center justify-center bg-black/95">
+        <button id="close-lightbox" class="absolute top-6 right-6 text-white hover:text-primary"><svg class="h-10 w-10"
+                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M6 18L18 6M6 6l12 12"></path>
+            </svg></button>
+        <div class="max-w-6xl w-full p-4">
+            <img id="lightbox-img" src="" class="w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl"
+                alt="Lightbox">
+        </div>
+    </div>
+
+    <!-- Data & Scripts -->
+    <script>
+        const menuData = [
+            { id: 1, name: 'Margherita Pizza', category: 'lunch', image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800', price: '$16.99', calories: '750', desc: 'Classic San Marzano tomato sauce, fresh buffalo mozzarella, and aromatic basil leaves.', ingredients: 'Dough, Tomatoes, Mozzarella, Basil, Extra Virgin Olive Oil' },
+            { id: 2, name: 'Truffle Ravioli', category: 'specials', image: 'https://images.unsplash.com/photo-1587740908075-9e245070dfaa?w=800', price: '$22.99', calories: '580', desc: 'Hand-made pasta pockets filled with ricotta and spinach, tossed in a creamy black truffle sauce.', ingredients: 'Fresh Pasta, Ricotta, Spinach, Black Truffle, Sage' },
+            { id: 3, name: 'Eggs Benedict', category: 'breakfast', image: 'https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=800', price: '$13.99', calories: '580', desc: 'Perfectly poached eggs on a toasted English muffin with premium Canadian bacon and silken hollandaise.', ingredients: 'Eggs, Muffin, Bacon, Hollandaise, Chives' },
+            { id: 4, name: 'Grilled Salmon', category: 'dinner', image: 'https://images.unsplash.com/photo-1485921325833-c519f76c4927?w=800', price: '$24.99', calories: '520', desc: 'Wild Atlantic salmon fillet grilled to perfection, served with lemon herb butter and seasonal greens.', ingredients: 'Salmon, Lemon, Herbs, Butter, Asparagus' },
+            { id: 5, name: 'Tiramisu', category: 'specials', image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800', price: '$8.99', calories: '450', desc: 'The quintessential Italian dessert. Layers of coffee-soaked ladyfingers and creamy mascarpone.', ingredients: 'Ladyfingers, Espresso, Mascarpone, Cocoa' },
+            { id: 6, name: 'Classic Pancakes', category: 'breakfast', image: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=800', price: '$9.99', calories: '450', desc: 'Golden buttermilk pancakes stacked high, served with organic maple syrup and fresh berries.', ingredients: 'Buttermilk, Flour, Eggs, Berries, Maple Syrup' },
+            { id: 7, name: 'Caprese Salad', category: 'lunch', image: 'https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?w=800', price: '$12.99', calories: '320', desc: 'Vibrant heirloom tomatoes paired with fresh mozzarella and a drizzle of aged balsamic glaze.', ingredients: 'Heirloom Tomatoes, Mozzarella, Balsamic Glaze, Basil' },
+            { id: 8, name: 'Wagyu Burger', category: 'specials', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800', price: '$29.99', calories: '890', desc: 'Luxurious Wagyu beef patty with melty aged cheddar and truffle aioli on a toasted brioche bun.', ingredients: 'Wagyu Beef, Cheddar, Brioche, Truffle Aioli' }
+        ];
+
+        const galleryImages = [
+            'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600',
+            'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600',
+            'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600',
+            'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600',
+            'https://images.unsplash.com/photo-1551218372-a8789b81b253?w=600',
+            'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600',
+            'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600',
+            'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600'
+        ];
+
+        const stories = [
+            "Founded with a passion for genuine Italian flavors, Bella Cucina began in a small kitchen with traditional family recipes passed down through generations.",
+            "We source only the freshest organic ingredients from local farmers and authentic imports from Italy to ensure the soul of every dish remains true.",
+            "Our atmosphere is designed to mirror the warmth of an Italian home, where every meal is a celebration of life, family, and extraordinary taste."
+        ];
+
+        let currentStoryIdx = 0;
+        let lastScrollY = window.scrollY;
+
+        // --- Intersection Observer for Scroll Animations ---
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
+
+        // --- Navbar Logic ---
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                header.style.transform = 'translateY(-100%)'; // Hide
+            } else {
+                header.style.transform = 'translateY(0)'; // Show
+            }
+            lastScrollY = window.scrollY;
+        });
+
+        // Mobile Menu
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuToggle.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // --- Hero Background Slider ---
+        const heroBackgrounds = [
+            'https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&w=2070',
+            'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&w=2070',
+            'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&w=2070'
+        ];
+        let heroBgIdx = 0;
+        setInterval(() => {
+            heroBgIdx = (heroBgIdx + 1) % heroBackgrounds.length;
+            const bg = document.getElementById('hero-bg');
+            bg.style.opacity = '0';
+            setTimeout(() => {
+                bg.style.backgroundImage = `url('${heroBackgrounds[heroBgIdx]}')`;
+                bg.style.opacity = '0.4';
+            }, 500);
+        }, 5000);
+
+        // --- About Story Toggle ---
+        document.getElementById('next-story').addEventListener('click', () => {
+            currentStoryIdx = (currentStoryIdx + 1) % stories.length;
+            const text = document.getElementById('story-text');
+            text.style.opacity = '0';
+            setTimeout(() => {
+                text.textContent = `"${stories[currentStoryIdx]}"`;
+                text.style.opacity = '1';
+            }, 300);
+        });
+
+        // --- Menu Logic ---
+        function renderMenu(filter = 'all') {
+            const container = document.getElementById('menu-grid');
+            container.innerHTML = '';
+            const filtered = filter === 'all' ? menuData : menuData.filter(i => i.category === filter);
+
+            filtered.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'glass-card rounded-3xl overflow-hidden cursor-pointer group hover:shadow-2xl transition-all duration-300';
+                el.innerHTML = `
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="${item.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="${item.name}">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-2xl font-bold mb-2">${item.name}</h4>
+                        <div class="flex justify-between items-center">
+                            <span class="text-primary font-bold text-xl">${item.price}</span>
+                            <span class="text-xs font-bold uppercase tracking-widest text-dark/40">${item.category}</span>
+                        </div>
+                    </div>
+                `;
+                el.onclick = () => openMenuModal(item);
+                container.appendChild(el);
+            });
+        }
+
+        function openMenuModal(item) {
+            const modal = document.getElementById('menu-modal');
+            document.getElementById('modal-img').src = item.image;
+            document.getElementById('modal-title').textContent = item.name;
+            document.getElementById('modal-category').textContent = item.category;
+            document.getElementById('modal-desc').textContent = item.desc;
+            document.getElementById('modal-price').textContent = item.price;
+            document.getElementById('modal-calories').textContent = `${item.calories} Calories`;
+            document.getElementById('modal-ingredients').textContent = item.ingredients;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.getElementById('close-menu-modal').onclick = () => {
+            document.getElementById('menu-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        };
+
+        // Filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active', 'bg-primary', 'text-white');
+                    b.classList.add('bg-gray-100', 'text-dark');
+                });
+                btn.classList.add('active', 'bg-primary', 'text-white');
+                btn.classList.remove('bg-gray-100', 'text-dark');
+                renderMenu(btn.dataset.filter);
+            });
+        });
+
+        // --- Gallery Lightbox ---
+        function renderGallery() {
+            const container = document.getElementById('gallery-grid');
+            galleryImages.forEach(src => {
+                const el = document.createElement('div');
+                el.className = 'gallery-item overflow-hidden rounded-2xl cursor-pointer shadow-md aspect-square';
+                el.innerHTML = `<img src="${src}" class="w-full h-full object-cover">`;
+                el.onclick = () => {
+                    document.getElementById('lightbox-img').src = src;
+                    document.getElementById('lightbox').classList.add('active');
+                };
+                container.appendChild(el);
+            });
+        }
+
+        document.getElementById('close-lightbox').onclick = () => document.getElementById('lightbox').classList.remove('active');
+
+        // --- Initialization ---
+        renderMenu();
+        renderGallery();
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

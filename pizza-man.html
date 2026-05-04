@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza-Man | Fast & Delicious Delivery</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FFBE4D',
+                        dark: '#1a1a1a',
+                        light: '#ffffff',
+                    },
+                    fontFamily: {
+                        quicksand: ['Quicksand', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .pizza-spinner {
+            animation: spin 15s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .cart-drawer {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #FFBE4D;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-dark overflow-x-hidden">
+
+    <!-- Navbar -->
+    <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-40 border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+                    <i class="fa-solid fa-pizza-slice"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-tight">PIZZA<span class="text-primary">MAN</span></h1>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <!-- Search -->
+                <div
+                    class="hidden sm:flex items-center bg-gray-100 px-4 py-2 rounded-xl focus-within:bg-gray-200 transition-all">
+                    <i class="fa-solid fa-magnifying-glass text-gray-400 mr-2"></i>
+                    <input type="text" id="search-input" oninput="handleSearch()" placeholder="Search your flavor..."
+                        class="bg-transparent outline-none text-sm w-40 md:w-60">
+                </div>
+
+                <!-- Cart Toggle -->
+                <button onclick="toggleCart(true)" class="relative p-2 hover:bg-gray-100 rounded-full transition-all">
+                    <i class="fa-solid fa-cart-shopping text-xl"></i>
+                    <span id="cart-badge"
+                        class="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white hidden">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- App Container -->
+    <main class="max-w-6xl mx-auto px-6 pt-24 pb-20">
+
+        <!-- Hero Section -->
+        <section class="mb-16">
+            <div
+                class="bg-primary p-12 rounded-[2.5rem] flex flex-col md:flex-row items-center gap-10 overflow-hidden relative">
+                <div class="flex-grow z-10 text-center md:text-left">
+                    <h2 class="text-white text-5xl md:text-6xl font-black leading-tight mb-6">Hungry? <br> Order Now!
+                    </h2>
+                    <p class="text-white/80 text-lg mb-8 max-w-md">The best pizzas delivered fast to your door. Fresh
+                        ingredients, handmade dough, and premium toppings.</p>
+                    <button
+                        class="bg-dark text-white px-8 py-3 rounded-2xl font-bold hover:scale-105 transition-all shadow-xl shadow-dark/20">Explore
+                        Menu</button>
+                </div>
+                <div class="relative w-64 h-64 md:w-80 md:h-80 shrink-0">
+                    <img src="C:\Users\Computer\.gemini\antigravity\brain\ee69486b-4f5b-4266-94be-801b07ea76f9\pizza_man_hero_premium_1775992184296.png"
+                        alt="Pizza"
+                        class="w-full h-full object-cover pizza-spinner rounded-full drop-shadow-2xl border-8 border-white/20">
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <div class="flex flex-wrap gap-4 mb-12">
+            <button onclick="setCategory('all')"
+                class="cat-pill bg-dark text-white px-6 py-2 rounded-xl font-bold text-sm transition-all"
+                data-cat="all">All Pizzas</button>
+            <button onclick="setCategory('Veg')"
+                class="cat-pill bg-white text-dark/40 px-6 py-2 rounded-xl font-bold text-sm hover:text-dark transition-all"
+                data-cat="Veg">Vegetarian</button>
+            <button onclick="setCategory('Meat')"
+                class="cat-pill bg-white text-dark/40 px-6 py-2 rounded-xl font-bold text-sm hover:text-dark transition-all"
+                data-cat="Meat">Meaty</button>
+            <button onclick="setCategory('Spicy')"
+                class="cat-pill bg-white text-dark/40 px-6 py-2 rounded-xl font-bold text-sm hover:text-dark transition-all"
+                data-cat="Spicy">Spicy</button>
+        </div>
+
+        <!-- Pizza Grid -->
+        <div id="pizza-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- Dynamic items -->
+        </div>
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="cart-overlay" class="fixed inset-0 bg-dark/20 backdrop-blur-sm z-50 hidden" onclick="toggleCart(false)">
+    </div>
+    <div id="cart-drawer"
+        class="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-[60] shadow-2xl cart-drawer translate-x-full flex flex-col">
+        <div class="p-8 border-b flex justify-between items-center">
+            <h3 class="text-2xl font-bold">Your <span class="text-primary">Order</span></h3>
+            <button onclick="toggleCart(false)" class="p-2 hover:bg-gray-100 rounded-full transition-all">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+
+        <div id="cart-items" class="flex-grow overflow-y-auto p-8 custom-scrollbar space-y-6">
+            <!-- Empty message by default -->
+            <div class="text-center py-20 opacity-30">Your cart is empty</div>
+        </div>
+
+        <div class="p-8 bg-gray-50 border-t">
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-gray-500 font-medium">Subtotal</span>
+                <span id="cart-total" class="text-3xl font-black">$0.00</span>
+            </div>
+            <button onclick="simulateOrder()" id="checkout-btn" disabled
+                class="w-full bg-primary text-white py-4 rounded-3xl font-bold text-lg shadow-xl shadow-primary/30 disabled:opacity-50 disabled:shadow-none hover:scale-[1.02] active:scale-95 transition-all">
+                Confirm Order
+            </button>
+        </div>
+    </div>
+
+    <!-- Success Container -->
+    <div id="success-screen"
+        class="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center p-6 hidden">
+        <div class="w-32 h-32 bg-primary/20 rounded-full flex items-center justify-center mb-8 relative">
+            <div class="w-24 h-24 bg-primary rounded-full flex items-center justify-center text-white text-5xl">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div class="absolute -top-4 -right-4 text-primary text-4xl animate-bounce">🍕</div>
+        </div>
+        <h2 class="text-4xl font-bold mb-4">Order Confirmed!</h2>
+        <p class="text-gray-400 text-center mb-10 max-w-sm">Thank you for ordering from Pizza-Man. Your pizza is already
+            in the oven and will be arriving shortly!</p>
+        <button onclick="resetApp()"
+            class="bg-dark text-white px-10 py-4 rounded-3xl font-bold hover:scale-105 transition-all">Back to
+            Menu</button>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const pizzasData = [
+            { id: 1, name: "Margherita Ultra", price: 12.99, image: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=800&auto=format&fit=crop", cat: "Veg", rating: 4.8 },
+            { id: 2, name: "Pepperoni King", price: 15.49, image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=800&auto=format&fit=crop", cat: "Meat", rating: 4.9 },
+            { id: 3, name: "Double Cheese", price: 13.99, image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop", cat: "Veg", rating: 4.7 },
+            { id: 4, name: "Texas BBQ", price: 17.99, image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&auto=format&fit=crop", cat: "Meat", rating: 4.6 },
+            { id: 5, name: "Spicy Volcano", price: 16.29, image: "https://images.unsplash.com/photo-1593504049359-7433010b0638?w=800&auto=format&fit=crop", cat: "Spicy", rating: 4.5 },
+            { id: 6, name: "Garden Fresh", price: 11.49, image: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?w=500&h=500&fit=crop", cat: "Veg", rating: 4.3 },
+            { id: 7, name: "Hell's Kitchen", price: 18.99, image: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=500&h=500&fit=crop", cat: "Spicy", rating: 5.0 },
+            { id: 8, name: "Meat Lover", price: 19.99, image: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=500&h=500&fit=crop", cat: "Meat", rating: 4.8 },
+        ];
+
+        let cart = [];
+        let currentCat = 'all';
+        let searchQuery = '';
+
+        function init() {
+            renderPizzas();
+            updateCartUI();
+        }
+
+        // --- Render UI ---
+        function renderPizzas() {
+            const grid = document.getElementById('pizza-grid');
+            const filtered = pizzasData.filter(p => {
+                const matchesCat = currentCat === 'all' || p.cat === currentCat;
+                const matchesSearch = p.name.toLowerCase().includes(searchQuery);
+                return matchesCat && matchesSearch;
+            });
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="bg-white p-6 rounded-[2rem] shadow-sm hover:shadow-xl transition-all group flex flex-col border border-gray-100">
+                    <div class="h-48 mb-6 overflow-hidden flex items-center justify-center relative">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover rounded-2xl group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-black flex items-center gap-1 shadow-sm">
+                            <i class="fa-solid fa-star text-primary"></i> ${item.rating}
+                        </div>
+                    </div>
+                    <h4 class="text-xl font-bold mb-1">${item.name}</h4>
+                    <p class="text-gray-400 text-sm mb-6">${item.cat} Style Pizza</p>
+                    <div class="flex justify-between items-center mt-auto">
+                        <span class="text-2xl font-black">$${item.price}</span>
+                        <button onclick="addToCart(${item.id})" class="bg-primary text-white w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-dark transition-all transform hover:rotate-6">
+                            <i class="fa-solid fa-plus text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- Actions ---
+        window.setCategory = (cat) => {
+            currentCat = cat;
+            document.querySelectorAll('.cat-pill').forEach(btn => {
+                const isActive = btn.dataset.cat === cat;
+                btn.className = isActive
+                    ? "cat-pill bg-dark text-white px-6 py-2 rounded-xl font-bold text-sm transition-all shadow-lg"
+                    : "cat-pill bg-white text-dark/40 px-6 py-2 rounded-xl font-bold text-sm hover:text-dark transition-all";
+            });
+            renderPizzas();
+        };
+
+        window.handleSearch = () => {
+            searchQuery = document.getElementById('search-input').value.toLowerCase();
+            renderPizzas();
+        };
+
+        // --- Cart Logic ---
+        window.addToCart = (id) => {
+            const product = pizzasData.find(p => p.id === id);
+            const inCart = cart.find(c => c.id === id);
+            if (inCart) {
+                inCart.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCartUI();
+
+            // Subtle animation feedback
+            const badge = document.getElementById('cart-badge');
+            badge.classList.add('scale-150');
+            setTimeout(() => badge.classList.remove('scale-150'), 200);
+        };
+
+        window.updateQty = (id, delta) => {
+            const item = cart.find(c => c.id === id);
+            if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+            updateCartUI();
+        };
+
+        function updateCartUI() {
+            const list = document.getElementById('cart-items');
+            const badge = document.getElementById('cart-badge');
+            const totalDisplay = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            if (cart.length === 0) {
+                list.innerHTML = `<div class="text-center py-20 opacity-30">Your cart is empty</div>`;
+                badge.classList.add('hidden');
+                totalDisplay.innerText = '$0.00';
+                checkoutBtn.disabled = true;
+                return;
+            }
+
+            badge.classList.remove('hidden');
+            badge.innerText = cart.reduce((sum, item) => sum + item.qty, 0);
+            checkoutBtn.disabled = false;
+
+            let total = 0;
+            list.innerHTML = cart.map(item => {
+                const sub = item.price * item.qty;
+                total += sub;
+                return `
+                    <div class="flex gap-4 items-center animate-fade-in bg-gray-50 p-4 rounded-3xl">
+                        <img src="${item.image}" class="w-16 h-16 rounded-2xl object-cover">
+                        <div class="flex-grow">
+                            <h5 class="font-bold text-sm truncate w-32">${item.name}</h5>
+                            <p class="text-primary font-black">$${item.price}</p>
+                        </div>
+                        <div class="flex items-center gap-3 bg-white px-3 py-1.5 rounded-2xl shadow-sm">
+                            <button onclick="updateQty(${item.id}, -1)" class="text-gray-400 hover:text-dark">-</button>
+                            <span class="font-bold text-sm min-w-[20px] text-center">${item.qty}</span>
+                            <button onclick="updateQty(${item.id}, 1)" class="text-gray-400 hover:text-dark">+</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            totalDisplay.innerText = `$${total.toFixed(2)}`;
+        }
+
+        window.toggleCart = (show) => {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            if (show) {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                drawer.classList.add('translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        };
+
+        window.simulateOrder = () => {
+            toggleCart(false);
+            document.getElementById('success-screen').classList.remove('hidden');
+            cart = [];
+            updateCartUI();
+        };
+
+        window.resetApp = () => {
+            document.getElementById('success-screen').classList.add('hidden');
+        };
+
+        init();
+    </script>
+
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+
+</html>

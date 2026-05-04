@@ -1,0 +1,17 @@
+# Windows thumbnails
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Folder config file
+.DS_Store
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.log

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Portal - Restaurant Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#C5A059',
+                            dark: '#0A0A0A',
+                            accent: '#1A1A1A',
+                        }
+                    },
+                    fontFamily: {
+                        outfit: ['Outfit', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0A0A0A; color: #FFFFFF; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .card-zoom:hover img { transform: scale(1.1); }
+    </style>
+</head>
+<body class="overflow-x-hidden min-h-screen">
+    <header class="py-12 glass border-b border-white/5 mb-16">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-brand-gold font-outfit text-4xl md:text-6xl font-bold uppercase tracking-widest mb-4">Project Portal</h1>
+            <p class="text-gray-400 font-light max-w-2xl mx-auto tracking-wide">A curated showcase of restaurant digital experiences, organized and ready for preview.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pb-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <!-- Project 1: Restro -->
+            <div class="group relative card-zoom overflow-hidden glass rounded-3xl p-4 transition-all hover:bg-white/5">
+                <div class="relative overflow-hidden aspect-video rounded-2xl mb-6">
+                    <img src="previews/restro.png" alt="Restro" class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="px-4 pb-4">
+                    <h3 class="text-2xl font-outfit font-bold mb-2 group-hover:text-brand-gold transition-colors">1. Restro</h3>
+                    <p class="text-gray-400 text-sm font-light mb-6">Modern minimalist restaurant landing page with a focus on clean layout and high-quality photography.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold font-bold">React • Vite • Tailwind</span>
+                        <a href="restro/" class="bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-dark px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all">Explore Folder</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Bhukhad -->
+            <div class="group relative card-zoom overflow-hidden glass rounded-3xl p-4 transition-all hover:bg-white/5">
+                <div class="relative overflow-hidden aspect-video rounded-2xl mb-6">
+                    <img src="previews/bhukhad.png" alt="Bhukhad" class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="px-4 pb-4">
+                    <h3 class="text-2xl font-outfit font-bold mb-2 group-hover:text-brand-gold transition-colors">2. Bhukhad</h3>
+                    <p class="text-gray-400 text-sm font-light mb-6">Vibrant food delivery application featuring shimmer loading effects and Swiggy-inspired UI.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold font-bold">React • Swiggy API • Shimmer</span>
+                        <a href="bhukhad/" class="bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-dark px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all">Explore Folder</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: Bella Cucina -->
+            <div class="group relative card-zoom overflow-hidden glass rounded-3xl p-4 transition-all hover:bg-white/5">
+                <div class="relative overflow-hidden aspect-video rounded-2xl mb-6">
+                    <img src="previews/bella-cucina.png" alt="Bella Cucina" class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="px-4 pb-4">
+                    <h3 class="text-2xl font-outfit font-bold mb-2 group-hover:text-brand-gold transition-colors">3. Bella Cucina</h3>
+                    <p class="text-gray-400 text-sm font-light mb-6">Italian fine dining experience with a focus on gallery, storytelling, and premium aesthetics.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold font-bold">React • Elegant UI • Framer</span>
+                        <a href="bella-cucina/" class="bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-dark px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all">Explore Folder</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: Savor Sphere -->
+            <div class="group relative card-zoom overflow-hidden glass rounded-3xl p-4 transition-all hover:bg-white/5">
+                <div class="relative overflow-hidden aspect-video rounded-2xl mb-6">
+                    <img src="previews/savor-sphere.png" alt="Savor Sphere" class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="px-4 pb-4">
+                    <h3 class="text-2xl font-outfit font-bold mb-2 group-hover:text-brand-gold transition-colors">4. Savor Sphere</h3>
+                    <p class="text-gray-400 text-sm font-light mb-6">Global fusion cuisine platform with modular UI components and a sophisticated layout.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold font-bold">TypeScript • Modular • CSS Modules</span>
+                        <a href="savor-sphere/" class="bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-dark px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all">Explore Folder</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5: Bistro Boss -->
+            <div class="group relative card-zoom overflow-hidden glass rounded-3xl p-4 transition-all hover:bg-white/5">
+                <div class="relative overflow-hidden aspect-video rounded-2xl mb-6">
+                    <img src="previews/bistro-boss.png" alt="Bistro Boss" class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="px-4 pb-4">
+                    <h3 class="text-2xl font-outfit font-bold mb-2 group-hover:text-brand-gold transition-colors">5. Bistro Boss</h3>
+                    <p class="text-gray-400 text-sm font-light mb-6">Structured restaurant client-server application with categorized food sections and covers.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold font-bold">Full Stack • MERN • Auth</span>
+                        <a href="bistro-boss/" class="bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-dark px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all">Explore Folder</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6: Cocktail Website -->
+            <div class="group relative card-zoom overflow-hidden glass rounded-3xl p-4 transition-all hover:bg-white/5">
+                <div class="relative overflow-hidden aspect-video rounded-2xl mb-6">
+                    <img src="previews/cocktail.png" alt="Cocktail Website" class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="px-4 pb-4">
+                    <h3 class="text-2xl font-outfit font-bold mb-2 group-hover:text-brand-gold transition-colors">6. Cocktail Website</h3>
+                    <p class="text-gray-400 text-sm font-light mb-6">Immersive bar experience featuring a unique loading screen and artistic cocktail visualizers.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold font-bold">TypeScript • Three.js • GSAP</span>
+                        <a href="cocktail/" class="bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-dark px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all">Explore Folder</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 7: React Restaurant Template -->
+            <div class="group relative card-zoom overflow-hidden glass rounded-3xl p-4 transition-all hover:bg-white/5">
+                <div class="relative overflow-hidden aspect-video rounded-2xl mb-6">
+                    <img src="previews/template.png" alt="Restaurant Template" class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="px-4 pb-4">
+                    <h3 class="text-2xl font-outfit font-bold mb-2 group-hover:text-brand-gold transition-colors">7. Project Template</h3>
+                    <p class="text-gray-400 text-sm font-light mb-6">Highly customizable React template using Shadcn UI for professional restaurant presentations.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold font-bold">React • Shadcn • Lucide</span>
+                        <a href="template/" class="bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-dark px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all">Explore Folder</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 8: Fast React Pizza -->
+            <div class="group relative card-zoom overflow-hidden glass rounded-3xl p-4 transition-all hover:bg-white/5">
+                <div class="relative overflow-hidden aspect-video rounded-2xl mb-6">
+                    <img src="previews/pizza.png" alt="Fast React Pizza" class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="px-4 pb-4">
+                    <h3 class="text-2xl font-outfit font-bold mb-2 group-hover:text-brand-gold transition-colors">8. Fast React Pizza</h3>
+                    <p class="text-gray-400 text-sm font-light mb-6">Efficient pizza ordering system focusing on Redux state management and clean UI layout.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold font-bold">React • Redux • React Router</span>
+                        <a href="pizza/" class="bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-dark px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all">Explore Folder</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 9: DineFlex -->
+            <div class="group relative card-zoom overflow-hidden glass rounded-3xl p-4 transition-all hover:bg-white/5">
+                <div class="relative overflow-hidden aspect-video rounded-2xl mb-6">
+                    <img src="previews/dineflex.png" alt="DineFlex" class="w-full h-full object-cover transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="px-4 pb-4">
+                    <h3 class="text-2xl font-outfit font-bold mb-2 group-hover:text-brand-gold transition-colors">9. DineFlex</h3>
+                    <p class="text-gray-400 text-sm font-light mb-6">Comprehensive restaurant management and booking system with availability selectors and maps.</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold font-bold">Next.js • Management • Maps</span>
+                        <a href="dineflex/" class="bg-brand-gold/10 text-brand-gold hover:bg-brand-gold hover:text-brand-dark px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all">Explore Folder</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 border-t border-white/5 text-center">
+        <p class="text-gray-500 text-xs font-light tracking-widest uppercase">© 2026 Developer Portfolio • Organized for Excellence</p>
+    </footer>
+</body>
+</html>

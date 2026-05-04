@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Time | Full Gastronomy Experience</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#EE2A24',
+                        secondary: '#FFBF00',
+                        dark: '#1A1A1A',
+                        light: '#F8F8F8',
+                    },
+                    fontFamily: {
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-shadow { box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .tab-active { background-color: #EE2A24; color: white; }
+        .cart-open { transform: translateX(0); }
+        .cart-closed { transform: translateX(100%); }
+        .nav-link.active { color: #EE2A24; font-weight: 800; border-bottom: 2px solid #EE2A24; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeInUp 0.5s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-light font-poppins text-dark overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 transition-all duration-300 py-4 px-6 md:px-12 flex justify-between items-center shadow-sm" id="main-nav">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white text-xl rotate-0 hover:rotate-12 transition-transform">
+                <i class="fas fa-pizza-slice"></i>
+            </div>
+            <h1 class="font-montserrat font-black text-2xl uppercase tracking-tighter">Pizza <span class="text-primary">Time</span></h1>
+        </div>
+        
+        <ul class="hidden lg:flex gap-6 font-bold uppercase text-[10px] tracking-widest" id="nav-links">
+            <li><a href="#hero" class="nav-link px-2 py-1 transition-all">Home</a></li>
+            <li><a href="#menu" class="nav-link px-2 py-1 transition-all">Menu</a></li>
+            <li><a href="#about" class="nav-link px-2 py-1 transition-all">About</a></li>
+            <li><a href="#careers" class="nav-link px-2 py-1 transition-all">Careers</a></li>
+            <li><a href="#blog" class="nav-link px-2 py-1 transition-all">Blog</a></li>
+            <li><a href="#contact" class="nav-link px-2 py-1 transition-all">Contact</a></li>
+        </ul>
+
+        <div class="flex items-center gap-6">
+            <button onclick="toggleCart()" class="relative group">
+                <i class="fas fa-shopping-basket text-2xl group-hover:text-primary transition-colors"></i>
+                <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+            </button>
+            <button class="lg:hidden" id="mobile-toggle"><i class="fas fa-bars text-2xl"></i></button>
+        </div>
+    </nav>
+
+    <!-- Side Cart (Managed via JS) -->
+    <div id="side-cart" class="fixed right-0 top-0 h-full w-full md:w-[400px] bg-white z-[60] shadow-2xl transition-transform duration-500 cart-closed flex flex-col">
+        <div class="p-6 border-b flex justify-between items-center bg-primary text-white">
+            <h3 class="font-montserrat font-bold text-xl uppercase italic">Your Order</h3>
+            <button onclick="toggleCart()" class="text-2xl hover:scale-125 transition-transform">&times;</button>
+        </div>
+        <div id="cart-items" class="flex-grow overflow-y-auto p-6 space-y-4">
+            <div class="flex flex-col items-center justify-center h-full text-gray-400 gap-4 opacity-30">
+                <i class="fas fa-shopping-cart text-5xl"></i>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        <div class="p-6 border-t bg-gray-50 space-y-4">
+            <div class="flex justify-between font-bold text-lg">
+                <span>Total Amount:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button onclick="checkout()" class="w-full bg-primary text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-dark shadow-xl hover:shadow-primary/20 transition-all">Checkout Process</button>
+        </div>
+    </div>
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 z-[55] hidden transition-opacity"></div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="pt-32 pb-16 px-6 md:px-12 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 min-h-[80vh]">
+        <div class="md:w-1/2 space-y-8 animate-fade-in">
+            <div class="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em]">
+                <span class="w-2 h-2 bg-primary rounded-full animate-ping"></span>
+                Freshly Baked Every Day
+            </div>
+            <h2 class="text-5xl md:text-8xl font-montserrat font-black leading-none uppercase italic">
+                The Best <br> <span class="text-primary not-italic">Pizza Time</span>
+            </h2>
+            <p class="text-gray-500 text-lg md:max-w-md leading-relaxed">
+                Experience a full-stack journey of flavors. Order your favorite pizza, sushi, or pasta from our curated gastronomy menu.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#menu" class="bg-primary text-white px-10 py-5 rounded-2xl font-bold uppercase tracking-widest shadow-xl shadow-primary/20 hover:-translate-y-1 transition-all text-center">Explore Menu</a>
+                <a href="#careers" class="bg-white text-dark border-2 border-dark/10 px-10 py-5 rounded-2xl font-bold uppercase tracking-widest hover:border-primary hover:text-primary transition-all text-center">Join Our Team</a>
+            </div>
+        </div>
+        <div class="md:w-1/2 relative group">
+            <div class="absolute -z-10 bg-secondary/30 w-full h-full rounded-full blur-[100px] group-hover:bg-primary/20 transition-colors"></div>
+            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80" alt="Hero Pizza" class="w-full h-auto drop-shadow-2xl hover:scale-105 transition-transform duration-1000 rotate-2 group-hover:rotate-0">
+        </div>
+    </section>
+
+    <!-- Menu Section (Original Core) -->
+    <section id="menu" class="py-24 bg-white px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+                <div class="space-y-4">
+                    <h3 class="text-primary font-bold uppercase tracking-widest text-xs">Menu Selection</h3>
+                    <h2 class="text-4xl md:text-6xl font-montserrat font-black uppercase italic">Pick Your <span class="text-primary">Menu</span></h2>
+                </div>
+                <div class="flex flex-wrap gap-4" id="category-tabs">
+                    <button onclick="filterMenu('all')" class="category-btn tab-active px-8 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest">All</button>
+                    <button onclick="filterMenu('pizza')" class="category-btn bg-gray-100 hover:bg-primary/10 px-8 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest transition-all">Pizza</button>
+                    <button onclick="filterMenu('sushi')" class="category-btn bg-gray-100 hover:bg-primary/10 px-8 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest transition-all">Sushi</button>
+                    <button onclick="filterMenu('pasta')" class="category-btn bg-gray-100 hover:bg-primary/10 px-8 py-3 rounded-xl font-bold uppercase text-[10px] tracking-widest transition-all">Pasta</button>
+                </div>
+            </div>
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 min-h-[500px]">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section (Expanded) -->
+    <section id="about" class="py-32 bg-dark text-white rounded-t-[4rem] relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+            <div class="space-y-12">
+                <div class="space-y-6">
+                    <h3 class="text-primary font-bold uppercase tracking-[0.4em] text-xs">Our Heritage</h3>
+                    <h2 class="text-5xl md:text-7xl font-montserrat font-black leading-none uppercase italic">Crafted by <br> <span class="text-primary not-italic">Passion</span></h2>
+                    <p class="text-gray-400 text-lg leading-relaxed font-light">
+                        Founded in 1982, Pizza Time started as a small family recipe. Today, we are a global benchmark for quality ingredients and fast delivery, combining traditional Italian techniques with modern flavor profiles.
+                    </p>
+                </div>
+                <div class="grid grid-cols-3 gap-8 text-center bg-white/5 p-10 rounded-[3rem] backdrop-blur-sm border border-white/5">
+                    <div><h4 class="text-3xl font-montserrat font-black text-primary">40+</h4><p class="text-[10px] uppercase text-gray-500">Years XP</p></div>
+                    <div><h4 class="text-3xl font-montserrat font-black text-primary">12k</h4><p class="text-[10px] uppercase text-gray-500">Reviews</p></div>
+                    <div><h4 class="text-3xl font-montserrat font-black text-primary">24h</h4><p class="text-[10px] uppercase text-gray-500">Delivery</p></div>
+                </div>
+            </div>
+            <div class="relative grid grid-cols-2 gap-6 group">
+                <img src="https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=600&q=80" class="w-full h-80 object-cover rounded-[3rem] grayscale group-hover:grayscale-0 transition-all duration-700">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" class="w-full h-80 object-cover rounded-[3rem] mt-12 grayscale group-hover:grayscale-0 transition-all duration-700">
+                <div class="absolute inset-0 border-2 border-primary/20 rounded-[4rem] -m-4 scale-105 group-hover:rotate-3 transition-transform"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Careers Section (New Component) -->
+    <section id="careers" class="py-32 bg-light px-6 md:px-12">
+        <div class="max-w-7xl mx-auto text-center mb-24">
+            <h3 class="text-primary font-bold uppercase tracking-widest text-xs mb-4">Join Our Journey</h3>
+            <h2 class="text-4xl md:text-6xl font-montserrat font-black uppercase italic">Build Your <span class="text-primary">Career</span></h2>
+        </div>
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Job 1 -->
+            <div class="bg-white p-10 rounded-[2.5rem] custom-shadow hover:-translate-y-2 transition-all group">
+                <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary text-2xl mb-8 group-hover:bg-primary group-hover:text-white transition-colors">
+                    <i class="fas fa-kitchen-set"></i>
+                </div>
+                <h4 class="font-montserrat font-bold text-xl mb-4">Master Chef</h4>
+                <p class="text-gray-400 text-sm mb-8 italic">Lead our culinary team and perfect the artisanal recipes.</p>
+                <button class="w-full py-4 border-2 border-primary text-primary font-bold uppercase text-[10px] rounded-xl hover:bg-primary hover:text-white transition-all">Apply Position</button>
+            </div>
+            <!-- Job 2 -->
+            <div class="bg-white p-10 rounded-[2.5rem] custom-shadow hover:-translate-y-2 transition-all group">
+                <div class="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary text-2xl mb-8 group-hover:bg-secondary group-hover:text-dark transition-colors">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h4 class="font-montserrat font-bold text-xl mb-4">Fast Courier</h4>
+                <p class="text-gray-400 text-sm mb-8 italic">Be the bridge between our oven and the customer's door.</p>
+                <button class="w-full py-4 border-2 border-secondary text-dark font-bold uppercase text-[10px] rounded-xl hover:bg-secondary transition-all">Apply Position</button>
+            </div>
+            <!-- Job 3 -->
+            <div class="bg-white p-10 rounded-[2.5rem] custom-shadow hover:-translate-y-2 transition-all group">
+                <div class="w-16 h-16 bg-dark/10 rounded-2xl flex items-center justify-center text-dark text-2xl mb-8 group-hover:bg-dark group-hover:text-white transition-colors">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h4 class="font-montserrat font-bold text-xl mb-4">Branch Lead</h4>
+                <p class="text-gray-400 text-sm mb-8 italic">Manage store operations and ensure a premium experience.</p>
+                <button class="w-full py-4 border-2 border-dark text-dark font-bold uppercase text-[10px] rounded-xl hover:bg-dark hover:text-white transition-all">Apply Position</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section (New Component) -->
+    <section id="blog" class="py-32 bg-white px-6 md:px-12">
+        <div class="max-w-7xl mx-auto mb-20 flex flex-col md:flex-row justify-between items-end gap-10">
+            <div class="space-y-4">
+                <h3 class="text-primary font-bold uppercase tracking-widest text-xs">Fresh Updates</h3>
+                <h2 class="text-4xl md:text-6xl font-montserrat font-black uppercase italic">News & <span class="text-primary">Articles</span></h2>
+            </div>
+            <a href="#" class="text-primary font-bold uppercase text-xs border-b-2 border-primary pb-2 hover:translate-x-2 transition-transform">Read All News</a>
+        </div>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- Article 1 -->
+            <div class="group cursor-pointer">
+                <div class="overflow-hidden rounded-[2.5rem] mb-6 aspect-video relative">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                    <div class="absolute bottom-6 left-6 bg-primary text-white px-4 py-2 rounded-xl text-[10px] font-bold uppercase">Guide</div>
+                </div>
+                <h4 class="text-2xl font-montserrat font-black uppercase italic leading-tight group-hover:text-primary transition-colors mb-4">The secret of the 48h proofed dough</h4>
+                <p class="text-gray-400 text-sm italic">Discover why timing is everything in the world of artisanal pizza crust.</p>
+            </div>
+            <!-- Article 2 -->
+            <div class="group cursor-pointer">
+                <div class="overflow-hidden rounded-[2.5rem] mb-6 aspect-video relative">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                    <div class="absolute bottom-6 left-6 bg-secondary text-dark px-4 py-2 rounded-xl text-[10px] font-bold uppercase">Healthy</div>
+                </div>
+                <h4 class="text-2xl font-montserrat font-black uppercase italic leading-tight group-hover:text-primary transition-colors mb-4">Organic sourcing in modern food</h4>
+                <p class="text-gray-400 text-sm italic">How we track our ingredients from the farm directly to your plate.</p>
+            </div>
+            <!-- Article 3 -->
+            <div class="group cursor-pointer">
+                <div class="overflow-hidden rounded-[2.5rem] mb-6 aspect-video relative">
+                    <img src="https://images.unsplash.com/photo-1563612116625-3012372fccce?w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                    <div class="absolute bottom-6 left-6 bg-dark text-white px-4 py-2 rounded-xl text-[10px] font-bold uppercase">Recipe</div>
+                </div>
+                <h4 class="text-2xl font-montserrat font-black uppercase italic leading-tight group-hover:text-primary transition-colors mb-4">Traditional sushi x Italian fusion</h4>
+                <p class="text-gray-400 text-sm italic">Behind the scenes of our latest experimental menu launch.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section (New Component) -->
+    <section id="contact" class="py-32 bg-dark rounded-b-[4rem] px-6 md:px-12 relative">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20">
+            <div class="lg:w-1/2 space-y-12 text-white">
+                <div class="space-y-6">
+                    <h3 class="text-primary font-bold uppercase tracking-widest text-xs">Reach Out</h3>
+                    <h2 class="text-5xl font-montserrat font-black uppercase italic">Contact <br> <span class="text-primary not-italic">Pizza Time</span></h2>
+                    <p class="text-gray-400 text-lg font-light leading-relaxed">
+                        Have questions about our menu or want to discuss a large order? Our team is always ready to assist you.
+                    </p>
+                </div>
+                <div class="space-y-8">
+                    <div class="flex gap-6 items-center">
+                        <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-primary text-xl"><i class="fas fa-location-dot"></i></div>
+                        <div><h5 class="font-bold text-sm tracking-widest uppercase mb-1">Visit Us</h5><p class="text-gray-400 text-xs italic">123 Pizza Lane, GA 30303</p></div>
+                    </div>
+                    <div class="flex gap-6 items-center">
+                        <div class="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-primary text-xl"><i class="fas fa-phone"></i></div>
+                        <div><h5 class="font-bold text-sm tracking-widest uppercase mb-1">Call Line</h5><p class="text-gray-400 text-xs italic">+1 (555) PIZZA-TIME</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-1/2 bg-white p-12 rounded-[3.5rem] shadow-2xl">
+                <form id="contact-form" class="space-y-6">
+                    <div class="grid grid-cols-2 gap-6">
+                        <input type="text" placeholder="FULL NAME" class="w-full bg-gray-50 border-none px-6 py-5 rounded-2xl text-[10px] font-bold tracking-widest outline-none focus:ring-2 focus:ring-primary/20 transition-all">
+                        <input type="email" placeholder="EMAIL ADDRESS" class="w-full bg-gray-50 border-none px-6 py-5 rounded-2xl text-[10px] font-bold tracking-widest outline-none focus:ring-2 focus:ring-primary/20 transition-all">
+                    </div>
+                    <textarea rows="4" placeholder="HOW CAN WE HELP?" class="w-full bg-gray-50 border-none px-6 py-5 rounded-2xl text-[10px] font-bold tracking-widest outline-none focus:ring-2 focus:ring-primary/20 transition-all resize-none"></textarea>
+                    <button type="submit" class="w-full bg-primary text-white py-5 rounded-2xl font-black uppercase text-xs tracking-[0.3em] shadow-xl shadow-primary/20 hover:bg-dark transition-all">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simple Footer -->
+    <footer class="py-12 px-6 md:px-12 text-center text-gray-400 text-[10px] font-bold uppercase tracking-widest">
+        &copy; 2024 Pizza Time Gastronomy. All rights reserved. 
+        <span class="mx-4 text-primary">|</span> 
+        Handcrafted for Excellence.
+    </footer>
+
+    <!-- Logic Scripts -->
+    <script>
+        // Menu Data
+        const menuItems = [
+            { id: 1, name: "Margherita", price: 12.99, category: "pizza", img: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&q=80", desc: "Italian mozzarella and herb tomatoes" },
+            { id: 2, name: "Pepperoni", price: 14.99, category: "pizza", img: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&q=80", desc: "Double spicy sliced pepperoni" },
+            { id: 3, name: "Salmon Sushi", price: 18.99, category: "sushi", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400&q=80", desc: "Fresh Atlantic grade salmon" },
+            { id: 4, name: "Dragon Roll", price: 21.99, category: "sushi", img: "https://images.unsplash.com/photo-1559410545-0bdcd187e0a6?w=400&q=80", desc: "Premium eel and avocado wrap" },
+            { id: 5, name: "Carbonara", price: 16.99, category: "pasta", img: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400&q=80", desc: "Creamy traditional cheese pasta" },
+            { id: 6, name: "Arrabbiata", price: 13.99, category: "pasta", img: "https://images.unsplash.com/photo-1546549032-9571cd6b27df?w=400&q=80", desc: "Spicy tomato herb base" },
+            { id: 7, name: "The Garden", price: 11.99, category: "pizza", img: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=400&q=80", desc: "Full garden fresh mountain toppings" },
+            { id: 8, name: "Tuna Sashimi", price: 22.99, category: "sushi", img: "https://images.unsplash.com/photo-1534422298391-e4f8c170db76?w=400&q=80", desc: "Hand-sliced premium tuna grade" },
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('pizzaTimeCart')) || [];
+
+        window.onload = () => {
+            renderProducts('all');
+            updateCartUI();
+            initScrollSpy();
+        }
+
+        function renderProducts(category) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            const filtered = category === 'all' ? menuItems : menuItems.filter(i => i.category === category);
+            filtered.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 rounded-[2.5rem] custom-shadow group hover:-translate-y-2 transition-all duration-500 opacity-0 animate-fade-in";
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <div class="relative overflow-hidden rounded-[2rem] mb-6 aspect-square bg-gray-50 border border-gray-100">
+                        <img src="${item.img}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000">
+                        <div class="absolute top-4 right-4 bg-white/95 px-3 py-1 rounded-full text-[10px] font-black shadow-lg">$${item.price}</div>
+                    </div>
+                    <div class="px-2 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h4 class="font-montserrat font-black text-xs uppercase tracking-tight group-hover:text-primary transition-colors">${item.name}</h4>
+                            <span class="text-[8px] bg-primary/10 text-primary px-2 py-1 rounded-md font-black uppercase tracking-widest">${item.category}</span>
+                        </div>
+                        <p class="text-gray-400 text-[10px] italic leading-relaxed min-h-[30px]">${item.desc}</p>
+                        <button onclick="addToCart(${item.id})" class="w-full bg-dark text-white py-4 rounded-xl font-bold uppercase text-[9px] tracking-[0.2em] group-hover:bg-primary transition-all">Quick Add</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterMenu(category) {
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('bg-gray-100');
+            });
+            event.target.classList.add('tab-active');
+            renderProducts(category);
+        }
+
+        function toggleCart() {
+            const sc = document.getElementById('side-cart');
+            const overlay = document.getElementById('cart-overlay');
+            sc.classList.toggle('cart-open');
+            sc.classList.toggle('cart-closed');
+            overlay.classList.toggle('hidden');
+            document.body.style.overflow = sc.classList.contains('cart-open') ? 'hidden' : 'auto';
+        }
+
+        function addToCart(id) {
+            const item = menuItems.find(i => i.id === id);
+            const inCart = cart.find(i => i.id === id);
+            if (inCart) inCart.qty += 1;
+            else cart.push({ ...item, qty: 1 });
+            saveAndUI();
+            const count = document.getElementById('cart-count');
+            count.classList.add('scale-150');
+            setTimeout(() => count.classList.remove('scale-150'), 300);
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            saveAndUI();
+        }
+
+        function updateQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) removeFromCart(id);
+                else saveAndUI();
+            }
+        }
+
+        function saveAndUI() {
+            localStorage.setItem('pizzaTimeCart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items');
+            const count = document.getElementById('cart-count');
+            const total = document.getElementById('cart-total');
+            count.innerText = cart.reduce((acc, i) => acc + i.qty, 0);
+            if (cart.length === 0) {
+                container.innerHTML = `<div class='flex flex-col items-center justify-center h-full text-gray-300 opacity-30 italic'><p>Basket is empty</p></div>`;
+                total.innerText = '$0.00';
+                return;
+            }
+            container.innerHTML = cart.map(item => `
+                <div class="flex gap-4 p-4 bg-gray-50 rounded-[1.5rem] border border-transparent hover:border-primary/20 transition-all">
+                    <img src="${item.img}" class="w-16 h-16 object-cover rounded-xl shadow-md">
+                    <div class="flex-grow space-y-2">
+                        <div class="flex justify-between items-start">
+                            <h6 class="text-[10px] font-black uppercase italic">${item.name}</h6>
+                            <button onclick="removeFromCart(${item.id})" class="text-gray-300 hover:text-primary">&times;</button>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-3 bg-white px-3 py-1 rounded-lg border border-gray-100">
+                                <button onclick="updateQty(${item.id}, -1)" class="text-[10px]">&minus;</button>
+                                <span class="text-[10px] font-black">${item.qty}</span>
+                                <button onclick="updateQty(${item.id}, 1)" class="text-[10px]">&plus;</button>
+                            </div>
+                            <span class="text-[10px] font-black">$${(item.price * item.qty).toFixed(2)}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            total.innerText = `$${cart.reduce((acc, i) => acc + (i.price * i.qty), 0).toFixed(2)}`;
+        }
+
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-white/100', 'shadow-lg', 'py-3');
+                nav.classList.remove('bg-white/95', 'py-4');
+            } else {
+                nav.classList.add('bg-white/95', 'py-4');
+                nav.classList.remove('bg-white/100', 'shadow-lg', 'py-3');
+            }
+        });
+
+        // Scroll Spy Implementation
+        function initScrollSpy() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // Form Submission visual
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = 'SENDING...';
+            btn.disabled = true;
+            setTimeout(() => {
+                btn.innerText = 'MESSAGE SENT!';
+                btn.classList.add('bg-green-500');
+                btn.classList.remove('bg-primary');
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.classList.remove('bg-green-500');
+                    btn.classList.add('bg-primary');
+                    btn.disabled = false;
+                    e.target.reset();
+                }, 3000);
+            }, 1500);
+        });
+
+        function checkout() {
+            if (cart.length === 0) return alert('Your basket is empty!');
+            alert('Your gastronomy order has been received!');
+            cart = []; 
+            saveAndUI();
+            toggleCart();
+        }
+    </script>
+</body>
+</html>

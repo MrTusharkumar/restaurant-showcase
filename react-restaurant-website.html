@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gourmet Haven | Fine Dining Experience</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#D4AF37',
+                        amber: {
+                            500: '#FFBF00',
+                            600: '#E6AC00',
+                        },
+                        onyx: '#0F0F0D',
+                        slate: '#1A1A18',
+                    },
+                    fontFamily: {
+                        playfair: ['Playfair Display', 'serif'],
+                        jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+                        cormorant: ['Cormorant Garamond', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-header {
+            background: rgba(15, 15, 13, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        .hero-gradient {
+            background: linear-gradient(to right, rgba(15, 15, 13, 0.95), rgba(15, 15, 13, 0.3));
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-onyx text-white font-jakarta antialiased selection:bg-gold selection:text-onyx">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-header px-6 md:px-12 py-5 transition-all duration-300" id="header">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 border-2 border-gold flex items-center justify-center rotate-45 group-hover:rotate-180 transition-transform duration-700">
+                    <span class="rotate-[-45deg] group-hover:rotate-[-180deg] transition-transform duration-700 text-gold font-bold">G</span>
+                </div>
+                <h1 class="text-2xl font-playfair font-bold tracking-widest uppercase">Gourmet Haven</h1>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-10">
+                <ul class="flex gap-8 text-sm font-semibold uppercase tracking-widest">
+                    <li><a href="#hero" class="hover:text-gold transition-colors">Home</a></li>
+                    <li><a href="#about" class="hover:text-gold transition-colors">About</a></li>
+                    <li><a href="#menu" class="hover:text-gold transition-colors">Menu</a></li>
+                    <li><a href="#chefs" class="hover:text-gold transition-colors">Chefs</a></li>
+                </ul>
+                <button class="bg-gold text-onyx px-6 py-2.5 text-xs font-black uppercase tracking-tighter hover:bg-white transition-all transform hover:scale-105">Book a Table</button>
+            </nav>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden text-white" id="menu-btn">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="fixed inset-0 bg-onyx z-[60] flex flex-col items-center justify-center gap-8 -translate-y-full transition-transform duration-500 md:hidden" id="mobile-menu">
+        <button class="absolute top-8 right-8 text-white" id="close-btn"><i data-lucide="x" class="w-10 h-10"></i></button>
+        <a href="#hero" class="text-3xl font-playfair hover:text-gold active-link border-b-2 border-transparent">Home</a>
+        <a href="#about" class="text-3xl font-playfair hover:text-gold">About</a>
+        <a href="#menu" class="text-3xl font-playfair hover:text-gold">Menu</a>
+        <a href="#chefs" class="text-3xl font-playfair hover:text-gold">Chefs</a>
+        <button class="mt-8 bg-gold text-onyx px-10 py-4 font-black uppercase tracking-widest">Reservations</button>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative h-screen flex items-center overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-[10000ms] scale-110" id="hero-bg" 
+             style="background-image: url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1600&auto=format&fit=crop')">
+        </div>
+        <div class="absolute inset-0 hero-gradient"></div>
+        
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="max-w-3xl" data-aos="fade-right">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="w-12 h-[2px] bg-gold"></span>
+                    <span class="text-gold font-bold tracking-[0.3em] uppercase text-xs md:text-sm">Exquisite Culinary Arts</span>
+                </div>
+                <h2 class="text-5xl md:text-8xl font-playfair font-black leading-tight mb-8">
+                    Taste the <span class="italic font-light">Difference</span> <br> 
+                    <span class="text-gold">in Every Bite</span>
+                </h2>
+                <p class="text-white/70 text-lg md:text-xl mb-12 max-w-xl font-light leading-relaxed">
+                    Welcome to Gourmet Haven, where tradition meets innovation. Discover a symphony of flavors crafted with the finest ingredients and boundless passion.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6">
+                    <a href="#menu" class="bg-gold text-onyx px-10 py-5 font-black uppercase tracking-widest text-sm hover:bg-white transition-all text-center">View Our Menu</a>
+                    <a href="#about" class="border border-white/30 backdrop-blur-sm px-10 py-5 font-black uppercase tracking-widest text-sm hover:border-gold hover:text-gold transition-all text-center">Our Story</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Social Side -->
+        <div class="hidden lg:flex absolute right-12 bottom-24 flex-col gap-8 z-10" data-aos="fade-up" data-aos-delay="500">
+            <a href="#" class="text-white/50 hover:text-gold transition-all"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+            <a href="#" class="text-white/50 hover:text-gold transition-all"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+            <a href="#" class="text-white/50 hover:text-gold transition-all"><i data-lucide="twitter" class="w-6 h-6"></i></a>
+            <div class="h-24 w-[1px] bg-gold mx-auto"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 bg-slate px-6 flex items-center justify-center">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div class="relative group" data-aos="fade-right">
+                <div class="absolute -inset-4 border-2 border-gold/30 -z-10 translate-x-12 translate-y-12 transition-transform duration-700 group-hover:translate-x-8 group-hover:translate-y-8"></div>
+                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1000&auto=format&fit=crop" 
+                     alt="Signature Dish" class="w-full h-[600px] object-cover shadow-2xl grayscale-[30%] group-hover:grayscale-0 transition-all duration-700">
+                <div class="absolute -bottom-8 -right-8 bg-onyx p-10 hidden md:block border-l-4 border-gold shadow-2xl">
+                    <p class="font-playfair text-3xl font-bold leading-tight">Since <br> <span class="text-gold">1992</span></p>
+                </div>
+            </div>
+            
+            <div class="space-y-10" data-aos="fade-left">
+                <div class="space-y-4">
+                    <h3 class="text-gold font-bold tracking-[0.3em] uppercase text-sm">Discover Our History</h3>
+                    <h2 class="text-4xl md:text-6xl font-playfair font-bold">Crafting <span class="italic font-light">Elegance</span> <br> on Your Plate</h2>
+                </div>
+                <div class="w-20 h-1 bg-gold"></div>
+                <p class="text-white/60 text-lg leading-relaxed font-light">
+                    For over three decades, Gourmet Haven has been the sanctuary for those who appreciate the finer things in life. Our journey began in a small cobblestone alley of Florence, and today, we bring that authentic Italian soul to your table.
+                </p>
+                <div class="grid grid-cols-2 gap-10 py-6">
+                    <div>
+                        <h4 class="text-4xl font-playfair font-bold text-gold mb-2">12k+</h4>
+                        <p class="text-xs uppercase tracking-widest text-white/40">Happy Clients</p>
+                    </div>
+                    <div>
+                        <h4 class="text-4xl font-playfair font-bold text-gold mb-2">15</h4>
+                        <p class="text-xs uppercase tracking-widest text-white/40">Master Chefs</p>
+                    </div>
+                </div>
+                <button class="bg-transparent border-2 border-gold text-gold px-12 py-5 font-black uppercase tracking-widest text-xs hover:bg-gold hover:text-onyx transition-all">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Showcase -->
+    <section id="menu" class="py-32 bg-onyx px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto text-center mb-24" data-aos="fade-up">
+            <h3 class="text-gold font-bold tracking-[0.3em] uppercase text-sm mb-4">Our Specialties</h3>
+            <h2 class="text-5xl md:text-7xl font-playfair font-bold mb-10">Culinary Masterpieces</h2>
+            <div class="flex flex-wrap justify-center gap-6 mt-12" id="menu-tabs">
+                <button class="menu-tab-btn active px-8 py-3 bg-gold text-onyx font-bold uppercase text-xs tracking-widest">Appetizers</button>
+                <button class="menu-tab-btn px-8 py-3 border border-white/20 hover:border-gold transition-all text-white/60 font-bold uppercase text-xs tracking-widest">Main Course</button>
+                <button class="menu-tab-btn px-8 py-3 border border-white/20 hover:border-gold transition-all text-white/60 font-bold uppercase text-xs tracking-widest">Signature Drinks</button>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="menu-grid">
+            <!-- Item 1 -->
+            <div class="group relative bg-slate p-2" data-aos="fade-up">
+                <div class="overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop" class="w-full h-80 object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 bg-onyx/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="border border-gold text-gold px-6 py-2 uppercase text-[0.6rem] tracking-[0.3em] backdrop-blur-sm">View Detail</span>
+                    </div>
+                </div>
+                <div class="p-8 text-center bg-slate">
+                    <h4 class="text-xl font-playfair font-bold mb-2 group-hover:text-gold transition-colors">Wagyu Beef Carpaccio</h4>
+                    <p class="text-white/40 text-xs mb-6 italic leading-relaxed">Thinly sliced wagyu beef, parmesan shavings, truffle oil.</p>
+                    <p class="text-2xl font-cormorant text-gold font-bold">$28.00</p>
+                </div>
+            </div>
+            <!-- Item 2 -->
+             <div class="group relative bg-slate p-2" data-aos="fade-up" data-aos-delay="200">
+                <div class="overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600&auto=format&fit=crop" class="w-full h-80 object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 bg-onyx/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="border border-gold text-gold px-6 py-2 uppercase text-[0.6rem] tracking-[0.3em] backdrop-blur-sm">View Detail</span>
+                    </div>
+                </div>
+                <div class="p-8 text-center bg-slate">
+                    <h4 class="text-xl font-playfair font-bold mb-2 group-hover:text-gold transition-colors">Wild Seabass Ceviche</h4>
+                    <p class="text-white/40 text-xs mb-6 italic leading-relaxed">Lime, cilantro, red onion, charred corn, sweet potato.</p>
+                    <p class="text-2xl font-cormorant text-gold font-bold">$24.00</p>
+                </div>
+            </div>
+            <!-- Item 3 -->
+             <div class="group relative bg-slate p-2" data-aos="fade-up" data-aos-delay="400">
+                <div class="overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1577308856961-8e9cd50fe0df?w=600&auto=format&fit=crop" class="w-full h-80 object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 bg-onyx/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="border border-gold text-gold px-6 py-2 uppercase text-[0.6rem] tracking-[0.3em] backdrop-blur-sm">View Detail</span>
+                    </div>
+                </div>
+                <div class="p-8 text-center bg-slate">
+                    <h4 class="text-xl font-playfair font-bold mb-2 group-hover:text-gold transition-colors">Truffle Polenta Squares</h4>
+                    <p class="text-white/40 text-xs mb-6 italic leading-relaxed">Crispy polenta, gorgonzola crema, fried sage.</p>
+                    <p class="text-2xl font-cormorant text-gold font-bold">$19.00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chefs Section -->
+    <section id="chefs" class="py-32 bg-slate px-6 flex flex-col items-center">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20 items-center">
+            <div class="lg:w-1/3" data-aos="fade-right">
+                <h3 class="text-gold font-bold tracking-[0.3em] uppercase text-sm mb-6">Master Culinary Team</h3>
+                <h2 class="text-5xl font-playfair font-bold mb-8 leading-tight">The Visionaries <br> <span class="text-gold italic font-light">Behind the Flavour</span></h2>
+                <p class="text-white/50 text-lg leading-relaxed font-light mb-10">
+                    Our kitchen is led by award-winning chefs who spend their lives perfecting the art of fine dining. Hand-picked from Michelin-starred kitchens globally.
+                </p>
+                <div class="flex gap-4">
+                    <button class="p-4 border border-gold/30 hover:border-gold transition-all"><i data-lucide="chevron-left" class="w-6 h-6 text-gold"></i></button>
+                    <button class="p-4 border border-gold/30 hover:border-gold transition-all"><i data-lucide="chevron-right" class="w-6 h-6 text-gold"></i></button>
+                </div>
+            </div>
+
+            <div class="lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8" data-aos="fade-left">
+                <!-- Chef 1 -->
+                <div class="group relative overflow-hidden bg-onyx h-[600px]">
+                    <img src="https://images.unsplash.com/photo-1583394238182-6f3ad43964a1?w=800&auto=format&fit=crop" alt="Chef Antonio" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-100 italic grayscale group-hover:grayscale-0">
+                    <div class="absolute bottom-0 left-0 right-0 p-10 bg-gradient-to-t from-onyx to-transparent">
+                        <h4 class="text-3xl font-playfair font-bold mb-2">Antonio Moretti</h4>
+                        <p class="text-gold uppercase tracking-[0.2em] text-xs font-bold mb-6">Executive Chef</p>
+                        <div class="flex gap-4 translate-y-20 group-hover:translate-y-0 transition-transform duration-500">
+                            <a href="#" class="text-white hover:text-gold"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                            <a href="#" class="text-white hover:text-gold"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chef 2 -->
+                <div class="group relative overflow-hidden bg-onyx h-[600px] mt-12 md:mt-24">
+                    <img src="https://images.unsplash.com/photo-1595273670150-db0c3c392b46?w=800&auto=format&fit=crop" alt="Chef Elena" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-100 italic grayscale group-hover:grayscale-0">
+                    <div class="absolute bottom-0 left-0 right-0 p-10 bg-gradient-to-t from-onyx to-transparent">
+                        <h4 class="text-3xl font-playfair font-bold mb-2">Elena Rossi</h4>
+                        <p class="text-gold uppercase tracking-[0.2em] text-xs font-bold mb-6">Pastry Expert</p>
+                        <div class="flex gap-4 translate-y-20 group-hover:translate-y-0 transition-transform duration-500">
+                            <a href="#" class="text-white hover:text-gold"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                            <a href="#" class="text-white hover:text-gold"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-onyx pt-32 pb-12 border-t border-white/5 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20 mb-20 text-center md:text-left">
+            <div class="space-y-8">
+                <a href="#" class="flex items-center gap-3 justify-center md:justify-start">
+                    <div class="w-8 h-8 border-2 border-gold flex items-center justify-center rotate-45"><span class="rotate-[-45deg] text-gold font-bold">G</span></div>
+                    <h1 class="text-xl font-playfair font-bold tracking-widest uppercase">Gourmet Haven</h1>
+                </a>
+                <p class="text-white/40 text-sm leading-relaxed max-w-xs mx-auto md:mx-0">
+                    Where the soul of Florence meets the sophistication of the modern palate. Experience the pinnacle of luxury dining.
+                </p>
+                <div class="flex gap-6 justify-center md:justify-start pt-4">
+                    <a href="#" class="w-12 h-12 rounded-full border border-gold/20 flex items-center justify-center hover:bg-gold hover:text-onyx transition-all duration-500"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="w-12 h-12 rounded-full border border-gold/20 flex items-center justify-center hover:bg-gold hover:text-onyx transition-all duration-500"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" class="w-12 h-12 rounded-full border border-gold/20 flex items-center justify-center hover:bg-gold hover:text-onyx transition-all duration-500"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <h4 class="text-gold uppercase tracking-[0.3em] text-xs font-bold">Quick Links</h4>
+                <ul class="space-y-4 text-white/60 text-sm">
+                    <li><a href="#about" class="hover:text-gold transition-colors">Our Story</a></li>
+                    <li><a href="#menu" class="hover:text-gold transition-colors">The Menu</a></li>
+                    <li><a href="#chefs" class="hover:text-gold transition-colors">Culinary Team</a></li>
+                    <li><a href="#" class="hover:text-gold transition-colors">Reservations</a></li>
+                </ul>
+            </div>
+
+            <div class="space-y-8">
+                <h4 class="text-gold uppercase tracking-[0.3em] text-xs font-bold">Opening Hours</h4>
+                <ul class="space-y-4 text-white/60 text-sm">
+                    <li class="flex justify-between border-b border-white/5 pb-2"><span>Monday - Friday</span> <span>11:00 - 23:00</span></li>
+                    <li class="flex justify-between border-b border-white/5 pb-2"><span>Saturday</span> <span>10:30 - 00:00</span></li>
+                    <li class="flex justify-between"><span>Sunday</span> <span>10:30 - 22:00</span></li>
+                </ul>
+            </div>
+
+            <div class="space-y-8">
+                <h4 class="text-gold uppercase tracking-[0.3em] text-xs font-bold">Location</h4>
+                <div class="space-y-4 text-white/60 text-sm">
+                    <p class="leading-relaxed">123 Florence Luxury District, <br> Tuscany 50123, Italy</p>
+                    <p class="text-gold font-bold">+39 (0) 55 123 4567</p>
+                    <p>info@gourmethaven.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-white/20 text-[0.6rem] uppercase tracking-[0.2em]">&copy; 2026 Gourmet Haven. All rights reserved.</p>
+            <div class="flex gap-10 text-white/20 text-[0.6rem] uppercase tracking-[0.2em]">
+                <a href="#" class="hover:text-gold">Privacy Policy</a>
+                <a href="#" class="hover:text-gold">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 120,
+        });
+
+        // Initialize Lucide
+        lucide.createIcons();
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('py-3', 'shadow-2xl');
+                header.classList.remove('py-5');
+            } else {
+                header.classList.add('py-5');
+                header.classList.remove('py-3', 'shadow-2xl');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('-translate-y-full');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('-translate-y-full');
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('-translate-y-full');
+            });
+        });
+
+        // Smooth bg scroll for hero
+        window.addEventListener('scroll', () => {
+            const heroBg = document.getElementById('hero-bg');
+            const scrollPos = window.scrollY;
+            heroBg.style.transform = `scale(1.1) translateY(${scrollPos * 0.1}px)`;
+        });
+    </script>
+</body>
+</html>

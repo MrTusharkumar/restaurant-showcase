@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restro | Taste the Authentic Saudi Cuisine</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        red: '#BD1F17',
+                        yellow: '#FEBF00',
+                        navy: '#0A1425',
+                        brandlight: '#FBF7F2',
+                    },
+                    fontFamily: {
+                        bebas: ['Bebas Neue', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                        roboto: ['Roboto', 'sans-serif'],
+                        raleway: ['Raleway', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-slide': 'fadeSlide 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeSlide: {
+                            '0%': { opacity: '0', transform: 'translateX(20px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #FFFFFF; color: #0A1425; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
+        .hero-diagonal {
+            background-color: #BD1F17;
+            /* Background image removed for minimalist look */
+        }
+        .common-btn {
+            background-color: #FEBF00;
+            color: #0A1425;
+            padding: 12px 24px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .common-btn:hover {
+            background-color: #0A1425;
+            color: #FEBF00;
+        }
+        .badge-dashed {
+            border: 2px dashed #BD1F17;
+        }
+        .slider-container::-webkit-scrollbar { display: none; }
+        .slider-container { -ms-overflow-style: none; scrollbar-width: none; scroll-behavior: smooth; }
+        .tab-btn-active { background-color: #BD1F17; color: #FFFFFF; }
+    </style>
+</head>
+<body class="antialiased font-roboto">
+
+    <!-- Header -->
+    <header class="absolute top-0 left-0 right-0 z-50 py-6 md:px-32 px-8 flex justify-between items-center bg-transparent">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-yellow rounded-lg flex items-center justify-center font-black text-navy">R</div>
+            <h1 class="text-white text-2xl font-bebas font-bold tracking-wider">Restro</h1>
+        </div>
+        <nav class="hidden md:flex items-center gap-10">
+            <ul class="flex gap-8 text-white font-medium text-sm">
+                <li><a href="#" class="hover:text-yellow transition-colors">Home</a></li>
+                <li><a href="#about" class="hover:text-yellow transition-colors">About</a></li>
+                <li><a href="#popular" class="hover:text-yellow transition-colors">Portfolio</a></li>
+                <li><a href="#testimonials" class="hover:text-yellow transition-colors">Clients</a></li>
+                <li><a href="#footer" class="hover:text-yellow transition-colors">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="common-btn hidden md:block">Book a Table</button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-diagonal relative min-h-screen flex flex-col justify-center items-start pt-20 overflow-hidden">
+        <div class="container mx-auto md:px-32 px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-6 z-10 space-y-8 animate-fade-slide">
+                <div class="bg-red/40 backdrop-blur-sm p-4 inline-block">
+                    <h2 class="font-bebas text-6xl md:text-[120px] text-white font-bold leading-[0.9] uppercase">
+                        Taste the authentic <br> Saudi cuisine
+                    </h2>
+                </div>
+                <p class="max-w-lg text-white text-xl md:text-2xl font-light leading-relaxed">
+                    Among the best Saudi chefs in the world, serving you something beyond flavor.
+                </p>
+                <button class="common-btn md:text-lg">Explore Menu</button>
+            </div>
+            
+            <div class="lg:col-span-6 flex justify-center lg:justify-end">
+                <!-- Image removed per user request for a cleaner look -->
+                <div class="relative">
+                    <!-- Today Offer Badge remains for visual interest -->
+                    <div class="w-32 h-32 md:w-48 md:h-48 bg-yellow rounded-full z-20 flex items-center justify-center p-2 shadow-xl animate-bounce">
+                        <div class="w-full h-full rounded-full border-2 border-dashed border-red flex items-center justify-center text-center">
+                            <span class="font-bebas text-black text-2xl md:text-5xl font-black leading-none">TODAY <br> OFFER</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 bg-white relative">
+        <div class="container mx-auto md:px-32 px-8 flex flex-col lg:flex-row gap-20">
+            <!-- Left: Image -->
+            <div class="lg:w-1/2 relative">
+                <img id="about-dynamic-img" src="https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=800&auto=format&fit=crop" alt="" class="rounded-3xl shadow-lg w-full h-[500px] object-cover transition-all duration-500">
+            </div>
+            <!-- Right: Tabs Content -->
+            <div class="lg:w-1/2 flex flex-col items-start justify-center gap-6">
+                <div class="flex border-b border-red/20 w-full mb-4">
+                    <button onclick="switchAboutTab(0)" id="tab-0" class="px-6 py-2 text-sm font-bold uppercase transition-all tab-btn-active">About</button>
+                    <button onclick="switchAboutTab(1)" id="tab-1" class="px-6 py-2 text-sm font-bold uppercase transition-all">Experience</button>
+                    <button onclick="switchAboutTab(2)" id="tab-2" class="px-6 py-2 text-sm font-bold uppercase transition-all">Contact</button>
+                </div>
+
+                <div id="about-content" class="space-y-6">
+                    <h3 id="about-title" class="font-bebas text-5xl md:text-6xl text-navy leading-none">Exceptional culinary experience and delicious food</h3>
+                    <p id="about-desc" class="text-[#333333] leading-relaxed text-justify">
+                        Enim tempor eget pharetra facilisis sed maecenas adipiscing. Eu leo molestie vel, ornare non id blandit netus. 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ornare non sed est cursus.
+                    </p>
+                    <div class="flex items-center gap-8">
+                        <button class="common-btn" id="about-btn">About More</button>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="phone" class="text-red w-6 h-6"></i>
+                            <span id="about-contact" class="font-bold text-navy">+88 3426 739 485</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Triple Features -->
+        <div class="container mx-auto md:px-32 px-8 grid grid-cols-1 md:grid-cols-3 gap-12 mt-24">
+            <div class="flex items-center gap-6 group">
+                <div class="w-20 h-20 bg-white rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center transition-transform group-hover:scale-110">
+                    <i data-lucide="box" class="text-red w-10 h-10"></i>
+                </div>
+                <div>
+                    <h4 class="font-bebas text-3xl text-black leading-none">Fast Delivery</h4>
+                    <p class="text-lg opacity-60">Within 30 minutes</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-6 group">
+                <div class="w-20 h-20 bg-white rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center transition-transform group-hover:scale-110">
+                    <i data-lucide="award" class="text-red w-10 h-10"></i>
+                </div>
+                <div>
+                    <h4 class="font-bebas text-3xl text-black leading-none">Absolute Dining</h4>
+                    <p class="text-lg opacity-60">Best buffet restaurant</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-6 group">
+                <div class="w-20 h-20 bg-white rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.08)] flex items-center justify-center transition-transform group-hover:scale-110">
+                    <i data-lucide="shopping-bag" class="text-red w-10 h-10"></i>
+                </div>
+                <div>
+                    <h4 class="font-bebas text-3xl text-black leading-none">Pickup Delivery</h4>
+                    <p class="text-lg opacity-60">Grab your food order</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Items -->
+    <section id="popular" class="py-32 bg-brandlight overflow-hidden">
+        <div class="container mx-auto md:px-32 px-8 flex justify-between items-end mb-16">
+            <div class="space-y-2">
+                <div class="flex items-center gap-2">
+                    <div class="w-2.5 h-2.5 bg-red"></div>
+                    <p class="text-red font-bold text-xl">Crispy, Every Bite Taste</p>
+                </div>
+                <h2 class="font-bebas text-5xl md:text-7xl">Popular Food Items</h2>
+            </div>
+            <div class="hidden md:flex gap-4">
+                <button onclick="slideItems(-1)" class="w-16 h-16 rounded-full bg-white shadow-lg flex items-center justify-center text-red hover:bg-red hover:text-white transition-all"><i data-lucide="chevron-left"></i></button>
+                <button onclick="slideItems(1)" class="w-16 h-16 rounded-full bg-white shadow-lg flex items-center justify-center text-red hover:bg-red hover:text-white transition-all"><i data-lucide="chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div id="popular-slider" class="flex gap-8 overflow-x-auto slider-container md:px-32 px-8 snap-x">
+            <!-- Cards Injected JS -->
+        </div>
+    </section>
+
+    <!-- Book a Table -->
+    <section id="booking" class="py-32 bg-[url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1600')] bg-cover bg-fixed bg-navy/80 bg-blend-multiply">
+        <div class="container mx-auto md:px-32 px-8 grid grid-cols-1 lg:grid-cols-6 gap-12">
+            <div class="lg:col-span-4 space-y-6">
+                <div class="flex items-center gap-2">
+                    <div class="w-2.5 h-2.5 bg-red"></div>
+                    <p class="text-red font-bold text-xl">Book Now</p>
+                </div>
+                <h2 class="font-bebas text-6xl text-white">Book Your Table</h2>
+                <p class="text-white/70 max-w-lg mb-10 leading-relaxed font-light">
+                    Enim tempor eget pharetra facilisis sed maecenas adipiscing. Eu leo molestie vel, ornare non id blandit netus.
+                </p>
+                
+                <form class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
+                    <input type="text" placeholder="Your Name*" class="bg-transparent border border-white/30 p-3 text-white focus:border-yellow outline-none transition-all">
+                    <input type="email" placeholder="Your Email" class="bg-transparent border border-white/30 p-3 text-white focus:border-yellow outline-none transition-all">
+                    <input type="date" class="bg-transparent border border-white/30 p-3 text-white focus:border-yellow outline-none transition-all invert opacity-70">
+                    <input type="number" placeholder="Total People" class="bg-transparent border border-white/30 p-3 text-white focus:border-yellow outline-none transition-all">
+                    <textarea placeholder="Message" rows="4" class="md:col-span-2 bg-transparent border border-white/30 p-3 text-white focus:border-yellow outline-none transition-all"></textarea>
+                    <button type="submit" class="common-btn py-4 md:w-fit font-black">Book Now</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-32 bg-brandlight">
+        <div class="container mx-auto md:px-32 px-8 flex justify-between items-end mb-16">
+            <div class="space-y-2">
+                <div class="flex items-center gap-2">
+                    <div class="w-2.5 h-2.5 bg-red"></div>
+                    <p class="text-red font-bold text-xl">Crispy, Every Bite Taste</p>
+                </div>
+                <h2 class="font-bebas text-5xl md:text-7xl">What Some of my Customers Say</h2>
+            </div>
+            <div class="hidden md:flex gap-4">
+                <button onclick="slideTestimonials(-1)" class="w-16 h-16 rounded-full bg-white shadow-lg flex items-center justify-center text-red hover:bg-red hover:text-white transition-all"><i data-lucide="chevron-left"></i></button>
+                <button onclick="slideTestimonials(1)" class="w-16 h-16 rounded-full bg-white shadow-lg flex items-center justify-center text-red hover:bg-red hover:text-white transition-all"><i data-lucide="chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div id="testimonial-slider" class="flex gap-0 overflow-x-hidden slider-container snap-x">
+             <!-- Injected by JS -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="py-24 bg-[url('https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1600')] bg-cover bg-navy/95 bg-blend-multiply text-white">
+        <div class="container mx-auto md:px-32 px-8">
+            <h2 class="font-bebas text-7xl text-center mb-20 uppercase">Wanna join the taste? <br> Reach out to us</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center">
+                <div class="flex flex-col items-center gap-4">
+                    <i data-lucide="clock" class="text-yellow w-12 h-12"></i>
+                    <h4 class="font-bebas text-3xl">Opening Hours</h4>
+                    <p class="opacity-70">Monday - Sunday <br> 11:00 AM - 10:00 PM</p>
+                </div>
+                <div class="flex flex-col items-center gap-4">
+                    <i data-lucide="phone-call" class="text-yellow w-12 h-12"></i>
+                    <h4 class="font-bebas text-3xl">Let's Talk</h4>
+                    <p class="opacity-70">Phone: 1-800-222-4545 <br> Fax: 1-800-222-4545</p>
+                </div>
+                <div class="flex flex-col items-center gap-4">
+                    <i data-lucide="mail" class="text-yellow w-12 h-12"></i>
+                    <h4 class="font-bebas text-3xl">Book a Table</h4>
+                    <p class="opacity-70">Email: info@niomax.com <br> Support: sales@niomax.com</p>
+                </div>
+                <div class="flex flex-col items-center gap-4">
+                    <i data-lucide="map-pin" class="text-yellow w-12 h-12"></i>
+                    <h4 class="font-bebas text-3xl">Our Address</h4>
+                    <p class="opacity-70">123 Anywhere, Any City, NY 12345 <br> New York, USA</p>
+                </div>
+            </div>
+
+            <div class="mt-32 flex flex-col items-center gap-10">
+                <div class="flex gap-6">
+                    <a href="#" class="w-14 h-14 rounded-full border border-white/30 flex items-center justify-center hover:bg-yellow hover:text-navy hover:border-yellow transition-all"><i data-lucide="facebook"></i></a>
+                    <a href="#" class="w-14 h-14 rounded-full border border-white/30 flex items-center justify-center hover:bg-yellow hover:text-navy hover:border-yellow transition-all"><i data-lucide="twitter"></i></a>
+                    <a href="#" class="w-14 h-14 rounded-full border border-white/30 flex items-center justify-center hover:bg-yellow hover:text-navy hover:border-yellow transition-all"><i data-lucide="instagram"></i></a>
+                    <a href="#" class="w-14 h-14 rounded-full border border-white/30 flex items-center justify-center hover:bg-yellow hover:text-navy hover:border-yellow transition-all"><i data-lucide="linkedin"></i></a>
+                </div>
+                <p class="opacity-40 text-sm">© 2024 Restro Restaurant All rights reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // Data
+        const buttonNames = [
+            { id: 1, name: "About", title: "Exceptional culinary experience and delicious food", description: "Enim tempor eget pharetra facilisis sed maecenas adipiscing. Eu leo molestie vel, ornare non id blandit netus. Lorem ipsum dolor sit amet, consectetur adipiscing elit.", button: "About More", contact: "+88 3426 739 485", img: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=800&auto=format&fit=crop" },
+            { id: 2, name: "Experience", title: "Unforgettable dining experience with exquisite flavors", description: "Our experience dates back decades, with secret recipes passed through generations. We focus on textures and aromas that define Saudi heritage.", button: "Experience More", contact: "+88 3426 739 485", img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&auto=format&fit=crop" },
+            { id: 3, name: "Contact", title: "Get in touch with us for more information and booking", description: "We are located in the heart of the city. Whether it's a family gathering or a private event, we ensure every detail is catered to your satisfaction.", button: "Contact Us", contact: "+88 3426 739 485", img: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&auto=format&fit=crop" },
+        ];
+
+        const popularItems = [
+            { title: "Vegetables Burger", desc: 'Barbecue Italian cuisine pizza', img: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400' },
+            { title: "Spacial Pizza", desc: 'Barbecue Italian cuisine pizza', img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400' },
+            { title: "Spacial French fries", desc: 'Barbecue Italian cuisine', img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400' },
+            { title: "Cuisine Chicken", desc: 'Japanese Cuisine Chicken', img: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=400' },
+        ];
+
+        const testimonials = [
+            { name: "Khalid Al Dawsry", loc: "Jeddah, Saudi", quote: "You can't go wrong with Chicken Mandi, I had it twice. The chicken was cooked perfectly, juicy & soft. I would defiantly recommend it.", profile: 'https://i.pravatar.cc/100?u=khalid', thumbnail: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000' },
+            { name: "Aisha Al Harbi", loc: "Riyadh, Saudi", quote: "The Lamb Mandi was absolutely delicious. The meat was tender and flavorful. Highly recommended!", profile: 'https://i.pravatar.cc/100?u=aisha', thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1000' },
+        ];
+
+        // Initialize UI
+        function init() {
+            lucide.createIcons();
+            
+            // Render Popular Items
+            const popSlider = document.getElementById('popular-slider');
+            popSlider.innerHTML = popularItems.concat(popularItems).map(item => `
+                <div class="min-w-[306px] h-full bg-white p-6 rounded-lg flex flex-col items-center text-center snap-start transition-all hover:scale-105 hover:shadow-xl">
+                    <img src="${item.img}" alt="" class="w-full h-40 object-cover rounded-md mb-6">
+                    <div class="w-12 h-1 bg-red mb-4"></div>
+                    <h3 class="font-bebas text-2xl mb-2 text-navy">${item.title}</h3>
+                    <p class="text-sm opacity-60">${item.desc}</p>
+                </div>
+            `).join('');
+
+            // Render Testimonials
+            const testSlider = document.getElementById('testimonial-slider');
+            testSlider.innerHTML = testimonials.map(item => `
+                <div class="min-w-full flex flex-col lg:flex-row snap-start shrink-0">
+                    <div class="lg:w-5/12 bg-yellow p-12 md:p-20 relative flex flex-col justify-between min-h-[400px]">
+                        <div class="text-navy text-8xl font-bebas absolute top-4 left-4 opacity-10">“</div>
+                        <p class="font-roboto text-xl md:text-2xl italic leading-relaxed text-black z-10 relative">“${item.quote}”</p>
+                        <div class="flex items-center justify-between border-t border-navy/20 pt-8 mt-12 w-full">
+                            <div>
+                                <h5 class="font-bebas text-2xl text-black leading-none">${item.name}</h5>
+                                <p class="text-sm opacity-70">${item.loc}</p>
+                            </div>
+                            <img src="${item.profile}" class="w-16 h-16 rounded-full border-2 border-red shadow-lg">
+                        </div>
+                    </div>
+                    <div class="lg:w-7/12 relative h-[300px] lg:h-auto">
+                        <img src="${item.thumbnail}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+                            <div class="w-20 h-20 bg-yellow rounded-full flex items-center justify-center animate-pulse cursor-pointer shadow-2xl">
+                                <i data-lucide="play" class="text-navy w-10 h-10 ml-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+        }
+
+        // About Tab Implementation
+        function switchAboutTab(idx) {
+            const btns = document.querySelectorAll('#about button[id^="tab-"]');
+            btns.forEach((btn, i) => btn.classList.toggle('tab-btn-active', i === idx));
+
+            const content = document.getElementById('about-content');
+            const imgElement = document.getElementById('about-dynamic-img');
+            
+            content.classList.remove('animate-fade-slide');
+            imgElement.classList.add('opacity-0');
+            
+            void content.offsetWidth; // Trigger reflow
+            
+            setTimeout(() => {
+                document.getElementById('about-title').innerText = buttonNames[idx].title;
+                document.getElementById('about-desc').innerText = buttonNames[idx].description;
+                document.getElementById('about-btn').innerText = buttonNames[idx].button;
+                document.getElementById('about-contact').innerText = buttonNames[idx].contact;
+                imgElement.src = buttonNames[idx].img;
+                
+                content.classList.add('animate-fade-slide');
+                imgElement.classList.remove('opacity-0');
+            }, 300);
+        }
+
+        // Slider Actions
+        function slideItems(dir) {
+            const slider = document.getElementById('popular-slider');
+            slider.scrollBy({ left: dir * 340, behavior: 'smooth' });
+        }
+
+        let testIdx = 0;
+        function slideTestimonials(dir) {
+            const slider = document.getElementById('testimonial-slider');
+            testIdx = (testIdx + dir + testimonials.length) % testimonials.length;
+            slider.scrollTo({ left: testIdx * slider.clientWidth, behavior: 'smooth' });
+        }
+
+        init();
+    </script>
+</body>
+</html>

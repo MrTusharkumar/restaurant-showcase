@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast React Pizza Co. | Out of the oven, to you</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        yellow: { 400: '#facc15', 500: '#eab308' },
+                        stone: { 100: '#f5f5f4', 200: '#e7e5e4', 300: '#d6d3d1', 500: '#78716c', 800: '#292524' },
+                    },
+                    fontFamily: {
+                        mono: ['Roboto Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f5f5f4; color: #292524; font-family: 'Roboto Mono', monospace; }
+        .pizza-img-soldout { filter: grayscale(1) opacity(0.7); }
+        input:focus { outline: none; box-shadow: 0 0 0 2px #eab308; }
+        .btn-animation:active { transform: scale(0.95); }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-yellow-400 border-b border-stone-200 uppercase px-4 py-3 sm:px-6 flex items-center justify-between tracking-widest">
+        <a href="#" onclick="showSection('home')" class="font-bold text-lg md:text-xl">Fast React Pizza Co.</a>
+        
+        <div class="hidden sm:block">
+            <input type="text" id="search-order" placeholder="Search order #" 
+                   class="bg-yellow-100 rounded-full px-4 py-2 text-sm w-28 sm:w-64 focus:w-72 transition-all duration-300">
+        </div>
+
+        <div id="header-user" class="hidden text-sm font-semibold md:block animate-fade-in">
+            <span id="header-username"></span>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-3xl mx-auto w-full">
+        <!-- Home Section -->
+        <section id="home-section" class="my-10 sm:my-16 text-center px-4">
+            <h1 class="mb-8 text-xl md:text-3xl font-semibold text-center">
+                The best pizza.
+                <br />
+                <span class="text-yellow-500">Straight out of the oven, straight to you.</span>
+            </h1>
+
+            <div id="user-entry" class="space-y-4">
+                <p class="text-sm md:text-base mb-4">👋 Welcome! Please start by telling us your name:</p>
+                <input type="text" id="username-input" placeholder="Your full name" 
+                       class="rounded-full border border-stone-200 px-4 py-2 text-sm w-72 mb-8 focus:ring-yellow-400">
+                <div id="start-btn-container" class="hidden">
+                    <button onclick="startOrdering()" class="bg-yellow-400 uppercase font-semibold text-stone-800 py-3 px-6 rounded-full hover:bg-yellow-300 transition-all btn-animation">Start Ordering</button>
+                </div>
+            </div>
+
+            <div id="continue-ordering" class="hidden">
+                <button onclick="showSection('menu')" class="bg-yellow-400 uppercase font-semibold text-stone-800 py-3 px-6 rounded-full hover:bg-yellow-300 transition-all btn-animation">Continue ordering, <span id="welcome-name"></span></button>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section id="menu-section" class="hidden px-4 md:px-0 my-8">
+            <ul id="pizza-list" class="divide-y divide-stone-200 border-b border-stone-200">
+                <!-- Injected by logic -->
+            </ul>
+        </section>
+
+        <!-- Success Section -->
+        <section id="success-section" class="hidden py-16 px-6 text-center">
+            <div class="bg-green-100 p-8 rounded-2xl border border-green-200 max-w-md mx-auto">
+                <h2 class="text-2xl font-bold text-green-800 mb-4">Order Confirmed!</h2>
+                <p class="text-stone-600 mb-6 font-medium">Your delicious pizza is in the oven. <br> Expected arrival: <span id="arrival-time">30</span> mins.</p>
+                <div class="bg-white p-4 rounded-xl border border-green-100 inline-block mb-6">
+                    <p class="text-sm text-stone-400 uppercase tracking-widest font-bold">Order ID</p>
+                    <p class="text-2xl font-black text-stone-800" id="order-id">#IUK67J</p>
+                </div>
+                <br>
+                <button onclick="showSection('home')" class="text-yellow-600 font-bold hover:underline">Place another order</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Footer Bar -->
+    <div id="cart-footer" class="hidden fixed bottom-0 left-0 right-0 bg-stone-800 p-4 text-stone-200 uppercase sm:px-6 flex items-center justify-between">
+        <div class="space-x-4 sm:space-x-6">
+            <span id="cart-qty" class="font-semibold"></span>
+            <span id="cart-total" class="font-semibold"></span>
+        </div>
+        <button onclick="placeOrder()" class="hover:text-yellow-400 transition-colors tracking-widest font-semibold flex items-center gap-2">
+            Open Cart &rarr;
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Sample Pizza Data
+        const menu = [
+            { id: 1, name: "Margherita", unitPrice: 12, ingredients: ["tomato", "mozzarella", "basil"], soldOut: false, imageUrl: "https://react-fast-pizza-api.jonas.io/images/pizza/1.jpg" },
+            { id: 2, name: "Marinara", unitPrice: 9, ingredients: ["tomato", "garlic", "oregano"], soldOut: false, imageUrl: "https://react-fast-pizza-api.jonas.io/images/pizza/2.jpg" },
+            { id: 3, name: "Roma", unitPrice: 15, ingredients: ["tomato", "mozzarella", "prosciutto", "arugula"], soldOut: true, imageUrl: "https://react-fast-pizza-api.jonas.io/images/pizza/3.jpg" },
+            { id: 4, name: "Prosciutto e Funghi", unitPrice: 16, ingredients: ["tomato", "mozzarella", "ham", "mushrooms"], soldOut: false, imageUrl: "https://react-fast-pizza-api.jonas.io/images/pizza/4.jpg" },
+            { id: 5, name: "Diavola", unitPrice: 16, ingredients: ["tomato", "mozzarella", "spicy salami", "chili flakes"], soldOut: false, imageUrl: "https://react-fast-pizza-api.jonas.io/images/pizza/5.jpg" },
+            { id: 6, name: "Napoletana", unitPrice: 14, ingredients: ["tomato", "mozzarella", "anchovies", "capers", "olives"], soldOut: false, imageUrl: "https://react-fast-pizza-api.jonas.io/images/pizza/6.jpg" },
+            { id: 7, name: "Siciliana", unitPrice: 15, ingredients: ["tomato", "mozzarella", "anchovies", "olives", "caper", "onions"], soldOut: false, imageUrl: "https://react-fast-pizza-api.jonas.io/images/pizza/7.jpg" },
+            { id: 8, name: "Pepperoni", unitPrice: 14, ingredients: ["tomato", "mozzarella", "pepperoni"], soldOut: false, imageUrl: "https://react-fast-pizza-api.jonas.io/images/pizza/8.jpg" }
+        ];
+
+        // App State
+        let currentUser = localStorage.getItem('pizzaUser') || '';
+        let cart = [];
+
+        // UI Logic
+        function showSection(sectionId) {
+            document.getElementById('home-section').classList.add('hidden');
+            document.getElementById('menu-section').classList.add('hidden');
+            document.getElementById('success-section').classList.add('hidden');
+            
+            document.getElementById(`${sectionId}-section`).classList.remove('hidden');
+            if (sectionId === 'home') initHome();
+        }
+
+        function initHome() {
+            if (currentUser) {
+                document.getElementById('user-entry').classList.add('hidden');
+                document.getElementById('continue-ordering').classList.remove('hidden');
+                document.getElementById('welcome-name').innerText = currentUser;
+                document.getElementById('header-user').classList.remove('hidden');
+                document.getElementById('header-username').innerText = currentUser;
+            } else {
+                document.getElementById('user-entry').classList.remove('hidden');
+                document.getElementById('continue-ordering').classList.add('hidden');
+                document.getElementById('header-user').classList.add('hidden');
+            }
+        }
+
+        // Handle Username Input
+        document.getElementById('username-input').addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            document.getElementById('start-btn-container').classList.toggle('hidden', val.length === 0);
+        });
+
+        function startOrdering() {
+            currentUser = document.getElementById('username-input').value.trim();
+            localStorage.setItem('pizzaUser', currentUser);
+            showSection('menu');
+            initHome();
+        }
+
+        function renderMenu() {
+            const list = document.getElementById('pizza-list');
+            list.innerHTML = menu.map(pizza => {
+                const cartItem = cart.find(c => c.id === pizza.id);
+                const quantity = cartItem ? cartItem.qty : 0;
+
+                return `
+                <li class="flex gap-4 py-4 px-2">
+                    <img src="${pizza.imageUrl}" alt="${pizza.name}" class="h-24 ${pizza.soldOut ? 'pizza-img-soldout' : ''}">
+                    <div class="flex flex-col grow pt-0.5">
+                        <p class="font-medium text-lg leading-none mb-1">${pizza.name}</p>
+                        <p class="text-sm italic text-stone-500 capitalize mb-4">${pizza.ingredients.join(', ')}</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            ${!pizza.soldOut ? `<p class="text-sm font-semibold">$${pizza.unitPrice.toFixed(2)}</p>` : `<p class="text-sm uppercase font-semibold text-stone-500">Sold out</p>`}
+                            
+                            <div class="flex items-center gap-3 sm:gap-8">
+                                ${quantity > 0 ? `
+                                    <div class="flex items-center gap-2 md:gap-3">
+                                        <button onclick="updateQty(${pizza.id}, -1)" class="bg-yellow-400 opacity-90 rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg btn-animation">-</button>
+                                        <span class="text-sm font-bold">${quantity}</span>
+                                        <button onclick="updateQty(${pizza.id}, 1)" class="bg-yellow-400 opacity-90 rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg btn-animation">+</button>
+                                    </div>
+                                    <button onclick="removeFromCart(${pizza.id})" class="bg-yellow-400 uppercase font-semibold text-[10px] md:text-xs py-2 px-3 md:px-4 rounded-full hover:bg-yellow-300 transition-all btn-animation">Delete</button>
+                                ` : ''}
+
+                                ${!pizza.soldOut && quantity === 0 ? `
+                                    <button onclick="addToCart(${pizza.id})" class="bg-yellow-400 uppercase font-semibold text-[10px] md:text-xs py-2 px-3 md:px-4 rounded-full hover:bg-yellow-300 transition-all btn-animation">Add to cart</button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                `}).join('');
+            
+            updateCartFooter();
+        }
+
+        // Cart Actions
+        function addToCart(id) {
+            const pizza = menu.find(p => p.id === id);
+            cart.push({ id: pizza.id, name: pizza.name, unitPrice: pizza.unitPrice, qty: 1 });
+            renderMenu();
+        }
+
+        function updateQty(id, delta) {
+            const item = cart.find(c => c.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) removeFromCart(id);
+                else renderMenu();
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(c => c.id !== id);
+            renderMenu();
+        }
+
+        function updateCartFooter() {
+            const footer = document.getElementById('cart-footer');
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.qty * item.unitPrice), 0);
+
+            if (totalQty > 0) {
+                footer.classList.remove('hidden');
+                document.getElementById('cart-qty').innerText = `${totalQty} Pizzas`;
+                document.getElementById('cart-total').innerText = `$${totalPrice.toFixed(2)}`;
+            } else {
+                footer.classList.add('hidden');
+            }
+        }
+
+        function placeOrder() {
+            const confirmationId = Array(6).fill(0).map(() => "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt(Math.floor(Math.random() * 36))).join('');
+            const randomTime = Math.floor(Math.random() * 20) + 20;
+            
+            document.getElementById('order-id').innerText = `#${confirmationId}`;
+            document.getElementById('arrival-time').innerText = randomTime;
+            
+            cart = []; // Reset Cart
+            showSection('success');
+        }
+
+        // Init
+        initHome();
+        renderMenu();
+    </script>
+</body>
+</html>

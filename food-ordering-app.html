@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dineout - The best Pizza restaurant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#d1411e',
+                        secondary: '#ac0101', 
+                        dark: '#222',
+                        light: '#f5f5f5',
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        logo: ['Dancing Script', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .view-transition { transition: opacity 0.3s ease; }
+        .view-hidden { opacity: 0; pointer-events: none; position: absolute; width: 100%; top: 0; left: 0; height: 0; overflow: hidden; }
+        .view-visible { opacity: 1; pointer-events: auto; position: relative; height: auto; overflow: visible; }
+        
+        /* Navigation badge pulse */
+        .cart-bump { animation: bump 300ms ease-out; }
+        @keyframes bump { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-800 bg-white flex flex-col min-h-screen">
+
+    <!-- Navbar Container -->
+    <header class="bg-primary sticky top-0 z-50 shadow-md h-24 flex items-center px-4 md:px-12 text-white justify-between">
+        <!-- Call Box -->
+        <div class="hidden lg:flex items-center gap-4 bg-white rounded-full p-2 pr-6 shadow-sm">
+            <div class="w-12 h-12 rounded-full bg-secondary flex justify-center items-center">
+                <i class="fas fa-phone-alt text-xl text-white"></i>
+            </div>
+            <div class="flex flex-col text-dark">
+                <span class="text-xs font-bold uppercase text-gray-500">Order Now!</span>
+                <span class="font-black">012 345 678</span>
+            </div>
+        </div>
+
+        <!-- Center Links -->
+        <nav class="hidden md:flex items-center gap-8 font-medium">
+            <button onclick="switchView('home')" class="hover:text-secondary transition-colors">Homepage</button>
+            <button onclick="switchView('home')" class="hover:text-secondary transition-colors">Products</button>
+            <button class="hover:text-secondary transition-colors">Menu</button>
+            <div class="text-4xl font-logo px-4 cursor-pointer" onclick="switchView('home')">
+                <span class="text-secondary tracking-wide drop-shadow-md">Dine</span>out
+            </div>
+            <button class="hover:text-secondary transition-colors">Events</button>
+            <button class="hover:text-secondary transition-colors">Blog</button>
+            <button class="hover:text-secondary transition-colors">Contact</button>
+        </nav>
+
+        <!-- Mobile Logo -->
+        <div class="md:hidden text-3xl font-logo cursor-pointer" onclick="switchView('home')">
+            <span class="text-dark">Dine</span>out
+        </div>
+
+        <!-- Cart Badge -->
+        <button onclick="switchView('cart')" class="relative flex items-center justify-center w-12 h-12" id="cart-nav-btn">
+            <i class="fas fa-shopping-cart text-2xl"></i>
+            <span id="cart-badge" class="absolute -top-1 -right-2 bg-white text-secondary w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shadow-lg">0</span>
+        </button>
+    </header>
+
+    <!-- MAIN VIEWS -->
+    <main class="flex-grow w-full relative">
+
+        <!-- VIEW: HOME -->
+        <div id="view-home" class="view-transition view-visible pb-20">
+            <!-- Featured Slider / Hero -->
+            <section class="w-full h-[60vh] bg-dark relative overflow-hidden" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=2000&auto=format&fit=crop'); background-size: cover; background-position: center;">
+                <div class="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
+                    <h2 class="text-5xl md:text-7xl font-black text-white mb-6 uppercase drop-shadow-lg tracking-tighter">Hot & Spicy <span class="text-primary">Pizzas</span></h2>
+                    <p class="text-xl text-white max-w-2xl font-light mb-8 drop-shadow-md">50% off on your first order. Authentic flavors delivered fast.</p>
+                </div>
+            </section>
+
+            <!-- PizzaList Component -->
+            <section class="max-w-7xl mx-auto px-4 py-20 text-center" id="products">
+                <h1 class="text-4xl font-black uppercase text-dark mb-6">The Best Pizza In Town</h1>
+                <p class="text-gray-500 max-w-4xl mx-auto text-lg leading-relaxed mb-16">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut blandit arcu in pretium molestie. Interdum et malesuada fames ac ante ipsum primis in faucibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Repudiandae eaque commodi fugit iste, quam amet necessitatibus ratione.
+                </p>
+
+                <!-- Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="product-grid">
+                    <!-- Javascript Data Injects Here -->
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW: CART -->
+        <div id="view-cart" class="view-transition view-hidden max-w-7xl mx-auto px-4 py-16">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Cart Table -->
+                <div class="lg:w-2/3">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-dark border-b border-gray-200">
+                                    <th class="py-4 px-2 uppercase font-black text-sm">Product</th>
+                                    <th class="py-4 px-2 uppercase font-black text-sm">Name</th>
+                                    <th class="py-4 px-2 uppercase font-black text-sm">Extras</th>
+                                    <th class="py-4 px-2 uppercase font-black text-sm">Price</th>
+                                    <th class="py-4 px-2 uppercase font-black text-sm">Quantity</th>
+                                    <th class="py-4 px-2 uppercase font-black text-sm">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cart-table-body">
+                                <!-- JS Injects Here -->
+                            </tbody>
+                        </table>
+                        <div id="empty-cart-msg" class="text-center py-12 text-gray-400 italic hidden">Your cart is empty.</div>
+                    </div>
+                </div>
+                
+                <!-- Cart Total Box -->
+                <div class="lg:w-1/3">
+                    <div class="bg-dark text-white p-10 rounded-lg shadow-xl shadow-gray-200">
+                        <h2 class="text-2xl font-black uppercase mb-6 tracking-wide">Cart Total</h2>
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold">Subtotal:</span>
+                                <span id="cart-subtotal" class="font-light">$0.00</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold">Discount:</span>
+                                <span class="font-light">$0.00</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold">Total:</span>
+                                <span id="cart-total" class="font-light text-xl">$0.00</span>
+                            </div>
+                        </div>
+                        <button onclick="handleCheckout()" class="w-full bg-white text-[#b72800] font-black py-3 px-6 uppercase shadow-md hover:-translate-y-0.5 transition-transform">
+                            Checkout Now!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER COMPONENT -->
+    <footer class="bg-dark mt-auto flex flex-col md:flex-row">
+        <div class="md:w-1/3 bg-[#bd2400] text-gray-200 p-12 lg:p-20 flex items-center justify-center">
+            <h2 class="font-logo text-4xl lg:text-5xl leading-tight">OH YES, WE DID. THE DINE<span class="text-dark">OUT</span> PIZZA, WELL BAKED SLICE OF PIZZA.</h2>
+        </div>
+        <div class="md:w-2/3 grid grid-cols-1 md:grid-cols-3 p-12 lg:p-20 gap-8 text-[#d3d3d3]">
+            <div>
+                <h3 class="text-[#b72800] font-black uppercase text-xl mb-6">Find Our Restaurants</h3>
+                <ul class="space-y-6">
+                    <li>1654 R. Don Road #304.<br>NewYork, 85022<br>(602) 867-1010</li>
+                    <li>2356 K. Laquie Rd #235.<br>NewYork, 85022<br>(602) 867-1011</li>
+                    <li>1614 E. Erwin St #104.<br>NewYork, 85022<br>(602) 867-1012</li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-[#b72800] font-black uppercase text-xl mb-6">Working Hours</h3>
+                <ul class="space-y-6">
+                    <li>MONDAY UNTIL FRIDAY<br>9:00 - 22:00</li>
+                    <li>SATURDAY - SUNDAY<br>12:00 - 24:00</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PRODUCT MODAL -->
+    <div id="product-modal" class="fixed inset-0 z-[100] bg-black/60 hidden items-center justify-center p-4">
+        <div class="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-lg shadow-2xl relative flex flex-col md:flex-row">
+            <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center font-bold z-10">&times;</button>
+            <!-- Image Side -->
+            <div class="md:w-1/2 p-10 flex items-center justify-center bg-gray-50 h-64 md:h-auto">
+                <img id="modal-img" src="" class="max-w-full max-h-full object-contain">
+            </div>
+            <!-- Details Side -->
+            <div class="md:w-1/2 p-10">
+                <h1 id="modal-title" class="text-3xl font-black uppercase text-dark mb-2">Pizza Title</h1>
+                <span id="modal-price" class="text-2xl font-bold text-[#b72800] border-b-2 border-[#b72800] pb-1">$19.90</span>
+                <p id="modal-desc" class="text-gray-500 mt-6 mb-6">Description.</p>
+                
+                <h3 class="font-bold text-lg mb-4 text-dark">Choose the size</h3>
+                <div class="flex gap-4 mb-6">
+                    <button onclick="selectSize(0)" id="size-btn-0" class="focus:outline-none w-10 h-10 rounded-full border-2 border-primary flex items-center justify-center shadow-lg bg-primary text-white"><i class="fas fa-pizza-slice"></i></button>
+                    <button onclick="selectSize(1)" id="size-btn-1" class="focus:outline-none w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 opacity-70 hover:opacity-100"><i class="fas fa-pizza-slice"></i></button>
+                    <button onclick="selectSize(2)" id="size-btn-2" class="focus:outline-none w-14 h-14 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 opacity-70 hover:opacity-100"><i class="fas fa-pizza-slice"></i></button>
+                </div>
+
+                <h3 class="font-bold text-lg mb-4 text-dark">Choose additional ingredients</h3>
+                <div class="grid grid-cols-2 gap-3 mb-8" id="modal-extras">
+                    <!-- Populated via JS -->
+                </div>
+
+                <!-- Add to cart strip -->
+                <div class="flex items-center gap-4">
+                    <input type="number" id="modal-qty" value="1" min="1" class="w-16 border rounded p-2 focus:outline-none">
+                    <button onclick="addModalToCart()" class="bg-[#b72800] text-white px-6 py-2 uppercase font-bold hover:bg-dark transition-colors">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIC SCRIPT -->
+    <script>
+        // --- DATA ---
+        const products = [
+            {
+                id: "1a", title: "Fiori di Zucca", 
+                prices: [19.9, 21.9, 24.9], 
+                desc: "Tomato sauce, mozzarella, zucchini flowers, and salted anchovies.",
+                img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&fit=contain",
+                extraOptions: [{text:"Double Ingredients", price:2}, {text:"Extra Cheese", price:1}, {text:"Spicy Sauce", price:1.5}, {text:"Garlic Sauce", price:1}]
+            },
+            {
+                id: "2b", title: "Campagnola", 
+                prices: [17.5, 19.5, 22.5], 
+                desc: "Wood-fired dough, san marzano tomatoes, fresh basil, extra virgin olive oil.",
+                img: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=500&fit=contain",
+                extraOptions: [{text:"Double Ingredients", price:2}, {text:"Extra Cheese", price:1}]
+            },
+            {
+                id: "3c", title: "Vegetariana", 
+                prices: [15.9, 17.9, 21.0], 
+                desc: "Seasonal vegetables, light cheese, and a perfect crispy crust.",
+                img: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=500&fit=contain",
+                extraOptions: [{text:"Spicy Sauce", price:1.5}, {text:"Garlic Sauce", price:1}]
+            },
+            {
+                id: "4d", title: "Bianca", 
+                prices: [18.5, 20.5, 23.0], 
+                desc: "White pizza with no tomato sauce, rich mozzarella, and ricotta base.",
+                img: "https://images.unsplash.com/photo-1593504049359-7433010b0638?w=500&fit=contain",
+                extraOptions: [{text:"Double Ingredients", price:2}, {text:"Extra Cheese", price:1}]
+            },
+             {
+                id: "5e", title: "Diavola", 
+                prices: [20.0, 22.0, 25.0], 
+                desc: "Spicy salame, fresh mozzarella, and hot chili flakes.",
+                img: "https://images.unsplash.com/photo-1574071318508-1cdbad80ad38?w=500&fit=contain",
+                extraOptions: [{text:"Extra Cheese", price:1}, {text:"Spicy Sauce", price:1.5}]
+            },
+             {
+                id: "6f", title: "Hawaiian", 
+                prices: [16.5, 18.5, 22.0], 
+                desc: "Pineapple, smoked ham, and mozzarella on a tomato base.",
+                img: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=500&fit=contain",
+                extraOptions: [{text:"Double Ingredients", price:2}, {text:"Extra Cheese", price:1}]
+            },
+        ];
+
+        // --- STATE ---
+        let cart = [];
+        let activeProduct = null;
+        let selectedSize = 0; // 0, 1, 2
+        let selectedExtras = []; 
+
+        // --- INITIALIZATION ---
+        window.onload = () => {
+            renderProducts();
+            updateCartBadge();
+        }
+
+        // --- NAVIGATION ---
+        function switchView(view) {
+            document.querySelectorAll('.view-transition').forEach(v => {
+                v.classList.remove('view-visible');
+                v.classList.add('view-hidden');
+            });
+            document.getElementById(`view-${view}`).classList.remove('view-hidden');
+            document.getElementById(`view-${view}`).classList.add('view-visible');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+
+            if (view === 'cart') renderCartTable();
+        }
+
+        // --- RENDER PRODUCTS ---
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = products.map(p => `
+                <div class="flex flex-col items-center cursor-pointer group" onclick="openProduct('${p.id}')">
+                    <img src="${p.img}" alt="${p.title}" class="w-[80%] h-48 object-contain mb-4 transform group-hover:scale-105 transition-transform duration-300">
+                    <h2 class="text-xl font-black text-secondary uppercase mb-2 group-hover:text-dark transition-colors">${p.title}</h2>
+                    <span class="text-lg font-bold text-dark mb-4">$${p.prices[0].toFixed(2)}</span>
+                    <p class="text-sm text-gray-500 max-w-sm">${p.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        // --- PRODUCT MODAL ---
+        function openProduct(id) {
+            activeProduct = products.find(p => p.id === id);
+            selectedSize = 0;
+            selectedExtras = [];
+            document.getElementById('modal-qty').value = 1;
+
+            document.getElementById('modal-img').src = activeProduct.img;
+            document.getElementById('modal-title').innerText = activeProduct.title;
+            document.getElementById('modal-desc').innerText = activeProduct.desc;
+            
+            // Populate Extras HTML
+            const extrasDiv = document.getElementById('modal-extras');
+            extrasDiv.innerHTML = activeProduct.extraOptions.map((e, index) => `
+                <label class="flex items-center gap-2 cursor-pointer p-2 border border-gray-100 rounded hover:bg-gray-50">
+                    <input type="checkbox" id="extra-${index}" class="w-4 h-4 text-primary" onchange="toggleExtra(${index})">
+                    <span class="text-sm text-gray-700">${e.text} (+$${e.price})</span>
+                </label>
+            `).join('');
+
+            updateModalPrice();
+            updateSizeUI();
+            
+            document.getElementById('product-modal').classList.remove('hidden');
+            document.getElementById('product-modal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+            document.getElementById('product-modal').classList.remove('flex');
+            activeProduct = null;
+        }
+
+        function selectSize(index) {
+            selectedSize = index;
+            updateSizeUI();
+            updateModalPrice();
+        }
+
+        function updateSizeUI() {
+            [0, 1, 2].forEach(i => {
+                const btn = document.getElementById(`size-btn-${i}`);
+                if(i === selectedSize) {
+                    btn.classList.replace('border-gray-300', 'border-primary');
+                    btn.classList.add('bg-primary', 'text-white', 'shadow-lg');
+                    btn.classList.remove('text-gray-500', 'opacity-70');
+                } else {
+                    btn.classList.replace('border-primary', 'border-gray-300');
+                    btn.classList.remove('bg-primary', 'text-white', 'shadow-lg');
+                    btn.classList.add('text-gray-500', 'opacity-70');
+                }
+            });
+        }
+
+        function toggleExtra(index) {
+            const extra = activeProduct.extraOptions[index];
+            const checkbox = document.getElementById(`extra-${index}`);
+            if (checkbox.checked) {
+                selectedExtras.push(extra);
+            } else {
+                selectedExtras = selectedExtras.filter(e => e.text !== extra.text);
+            }
+            updateModalPrice();
+        }
+
+        function updateModalPrice() {
+            if(!activeProduct) return;
+            const basePrice = activeProduct.prices[selectedSize];
+            const extrasPrice = selectedExtras.reduce((sum, e) => sum + e.price, 0);
+            const total = basePrice + extrasPrice;
+            document.getElementById('modal-price').innerText = `$${total.toFixed(2)}`;
+        }
+
+        // --- CART SYSTEM ---
+        function addModalToCart() {
+            const qty = parseInt(document.getElementById('modal-qty').value);
+            const basePrice = activeProduct.prices[selectedSize];
+            const extrasPrice = selectedExtras.reduce((sum, e) => sum + e.price, 0);
+            const price = basePrice + extrasPrice;
+            
+            const cartItem = {
+                id: activeProduct.id + '-' + Date.now(), // Unique instance
+                title: activeProduct.title,
+                img: activeProduct.img,
+                extras: selectedExtras.map(e => e.text),
+                price: price,
+                qty: qty
+            };
+
+            cart.push(cartItem);
+            
+            // Animation Badge
+            const badge = document.getElementById('cart-badge');
+            badge.classList.remove('cart-bump');
+            void badge.offsetWidth; // trigger reflow
+            badge.classList.add('cart-bump');
+            
+            updateCartBadge();
+            closeModal();
+        }
+
+        function updateCartBadge() {
+            const sum = cart.reduce((tot, item) => tot + item.qty, 0);
+            document.getElementById('cart-badge').innerText = sum;
+        }
+
+        function renderCartTable() {
+            const tbody = document.getElementById('cart-table-body');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+            
+            if (cart.length === 0) {
+                tbody.innerHTML = '';
+                emptyMsg.classList.remove('hidden');
+                document.getElementById('cart-subtotal').innerText = "$0.00";
+                document.getElementById('cart-total').innerText = "$0.00";
+                return;
+            }
+            
+            emptyMsg.classList.add('hidden');
+            let total = 0;
+
+            tbody.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                return `
+                    <tr class="border-b border-gray-100 last:border-0 hover:bg-gray-50">
+                        <td class="py-4 px-2">
+                            <img src="${item.img}" class="w-24 h-24 object-contain">
+                        </td>
+                        <td class="py-4 px-2 font-black text-secondary">${item.title}</td>
+                        <td class="py-4 px-2 text-sm text-gray-500">${item.extras.join(', ') || 'none'}</td>
+                        <td class="py-4 px-2 font-bold">$${item.price.toFixed(2)}</td>
+                        <td class="py-4 px-2 font-bold">${item.qty}</td>
+                        <td class="py-4 px-2 font-black text-dark text-lg">$${itemTotal.toFixed(2)}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('cart-subtotal').innerText = `$${total.toFixed(2)}`;
+            document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function handleCheckout() {
+            if(cart.length === 0) return alert('Your cart is empty!');
+            alert('Proceeding to Cash on Delivery. Thank you!');
+            cart = [];
+            updateCartBadge();
+            switchView('home');
+        }
+
+        // Close modal on click outside
+        document.getElementById('product-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resto One | The Art of Rustic Dining</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        terracotta: {
+                            50: '#fef6f3',
+                            100: '#feeee6',
+                            200: '#fcd9cc',
+                            300: '#f9bfa8',
+                            400: '#f59673',
+                            500: '#f17547',
+                            600: '#e25a28',
+                            700: '#be471e',
+                            800: '#973c1d',
+                            900: '#7a341e',
+                            950: '#42180c',
+                        },
+                        resto: {
+                            50: '#f7f6f3',
+                            100: '#edeae3',
+                            200: '#dcd6c7',
+                            300: '#c4baa5',
+                            400: '#b29e85',
+                            500: '#a18870',
+                            600: '#937a64',
+                            700: '#7a6555',
+                            800: '#665549',
+                            900: '#554840',
+                            950: '#2e2620',
+                        }
+                    },
+                    fontFamily: {
+                        playfair: ['Playfair Display', 'serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #fcfbf9; color: #2e2620; }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .hero-img-mask {
+            clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 90%);
+        }
+        .animate-reveal { animation: reveal 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden selection:bg-terracotta-200">
+
+    <!-- Navigation -->
+    <nav class="py-8 px-8 md:px-16 flex justify-between items-center bg-white/50 backdrop-blur-xl sticky top-0 z-50">
+        <div class="text-2xl font-playfair font-bold italic text-terracotta-700">
+            Chef <span class="not-italic text-resto-900 font-extrabold uppercase tracking-[0.3em] text-[0.7rem] ml-1">Resto One</span>
+        </div>
+        <div class="hidden md:flex space-x-12 text-[0.65rem] font-black uppercase tracking-[0.4em] text-resto-600">
+            <a href="#menu" class="hover:text-terracotta-600 transition-colors">Menu</a>
+            <a href="#story" class="hover:text-terracotta-600 transition-colors">The Story</a>
+            <a href="#chef" class="hover:text-terracotta-600 transition-colors">Chef</a>
+            <a href="#book" class="hover:text-terracotta-600 transition-colors font-black text-terracotta-700">Reservations</a>
+        </div>
+        <button class="bg-resto-950 text-white px-8 py-3 font-bold uppercase tracking-[0.2em] text-[0.6rem] hover:bg-terracotta-700 transition-all rounded-sm shadow-xl shadow-resto-950/20">Book Space</button>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto pt-20 pb-32 px-6 lg:px-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+                <div class="space-y-12 animate-reveal">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-[1px] bg-terracotta-400"></div>
+                        <h3 class="text-terracotta-500 font-bold uppercase tracking-[0.5em] text-[0.65rem]">Michelin Recommended 2024</h3>
+                    </div>
+                    <h1 class="font-playfair text-6xl md:text-8xl leading-[1.1] text-resto-950 italic">
+                        The Art of <br><span class="not-italic font-black uppercase text-terracotta-700 tracking-tight">Rustic Dining.</span>
+                    </h1>
+                    <p class="text-resto-600 text-lg font-light leading-relaxed max-w-lg italic border-l-2 border-terracotta-100 pl-8">
+                        Combining traditional culinary foundations with locally sourced, seasonal ingredients to create a dining experience that is both sophisticated and grounded.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6 pt-6">
+                        <button class="border-2 border-resto-950 px-12 py-5 font-bold uppercase tracking-[0.3em] text-[0.65rem] hover:bg-resto-950 hover:text-white transition-all">Explore Menu</button>
+                        <button class="bg-terracotta-700 text-white px-12 py-5 font-bold uppercase tracking-[0.3em] text-[0.65rem] hover:bg-terracotta-800 transition-all shadow-2xl shadow-terracotta-700/30">Reservations</button>
+                    </div>
+                </div>
+                <div class="relative group animate-reveal [animation-delay:0.3s]">
+                    <div class="absolute -inset-4 border border-terracotta-200 -z-10 translate-x-12 translate-y-12 transition-transform duration-1000 group-hover:translate-x-8 group-hover:translate-y-8"></div>
+                    <div class="overflow-hidden hero-img-mask">
+                        <img src="https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=1200&auto=format&fit=crop" alt="Resto One Interior" class="w-full h-[650px] object-cover scale-110 group-hover:scale-100 transition-transform duration-[3000ms]">
+                    </div>
+                    <!-- Stats Floating Card -->
+                    <div class="absolute -bottom-10 -left-10 bg-white p-10 shadow-2xl border-l-[6px] border-terracotta-600">
+                        <span class="block text-4xl font-playfair italic font-bold text-resto-950">98%</span>
+                        <span class="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-resto-400">Guest Satisfaction</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signature Dishes -->
+        <section id="menu" class="bg-resto-50 py-32 border-y border-resto-200">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-24 space-y-4">
+                    <h2 class="font-playfair text-5xl text-resto-950 italic">Signature Flavors</h2>
+                    <p class="text-terracotta-500 font-bold uppercase tracking-[0.4em] text-[0.6rem]">From our seasonal wood-fired menu</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+                    <!-- Dish 1 -->
+                    <div class="space-y-6 group cursor-pointer">
+                        <div class="overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=400&fit=crop" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-1000">
+                        </div>
+                        <div class="flex justify-between items-baseline">
+                            <h4 class="font-playfair text-2xl italic group-hover:text-terracotta-700 transition-colors">Roasted Heirloom Carrots</h4>
+                            <span class="text-resto-400 font-bold text-sm">$22.00</span>
+                        </div>
+                        <p class="text-resto-500 text-sm font-light italic leading-relaxed">Whipped ricotta, wild honey, and toasted pistachios from the valley floor.</p>
+                    </div>
+                    <!-- Dish 2 -->
+                    <div class="space-y-6 group cursor-pointer">
+                        <div class="overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=400&fit=crop" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-1000">
+                        </div>
+                        <div class="flex justify-between items-baseline">
+                            <h4 class="font-playfair text-2xl italic group-hover:text-terracotta-700 transition-colors">Wood-Fired Ribeye</h4>
+                            <span class="text-resto-400 font-bold text-sm">$64.00</span>
+                        </div>
+                        <p class="text-resto-500 text-sm font-light italic leading-relaxed">Bone-in dry-aged beef, charred leeks, and a reduction of fermented berries.</p>
+                    </div>
+                    <!-- Dish 3 -->
+                    <div class="space-y-6 group cursor-pointer">
+                        <div class="overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1473093226795-af9932fe5856?w=600&h=400&fit=crop" class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-1000">
+                        </div>
+                        <div class="flex justify-between items-baseline">
+                            <h4 class="font-playfair text-2xl italic group-hover:text-terracotta-700 transition-colors">Wild Mushroom Pappardelle</h4>
+                            <span class="text-resto-400 font-bold text-sm">$32.00</span>
+                        </div>
+                        <p class="text-resto-500 text-sm font-light italic leading-relaxed">Handmade ribbons, foraged truffles, and aged pecorino crema.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chef & Philosoph -->
+        <section id="chef" class="py-32 bg-white px-6">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
+                <div class="lg:col-span-5 relative">
+                     <img src="https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?w=800&auto=format&fit=crop" alt="Chef Portrait" class="w-full h-[700px] object-cover shadow-2xl">
+                     <div class="absolute -bottom-6 -right-6 bg-terracotta-700 text-white p-12 hidden lg:block">
+                        <p class="font-playfair text-xl italic leading-relaxed">"The ingredient is the master, I am simply the humble translator."</p>
+                        <span class="block mt-6 font-bold uppercase tracking-[0.3em] text-[0.6rem]">Executive Chef Julian Rossi</span>
+                     </div>
+                </div>
+                <div class="lg:col-span-7 space-y-16">
+                    <div class="space-y-6">
+                        <h2 class="font-playfair text-6xl italic text-resto-950 leading-tight">Grounded in Tradition, Elevated by Season.</h2>
+                        <div class="w-24 h-[1px] bg-terracotta-400"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div class="space-y-4">
+                            <h5 class="font-playfair text-xl font-bold italic">The Hearth</h5>
+                            <p class="text-resto-500 text-sm font-light leading-relaxed">Our open fire is the heartbeat of Resto One. We use exclusively seasoned oak and cherry wood to impart a primitive yet nuanced depth to every dish.</p>
+                        </div>
+                        <div class="space-y-4">
+                            <h5 class="font-playfair text-xl font-bold italic">The Terroir</h5>
+                            <p class="text-resto-500 text-sm font-light leading-relaxed">We work with exactly six local family farms. This intimacy allows us to influence planting schedules to ensure the highest peak of flavor on your plate.</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-10 flex items-center gap-12">
+                        <div>
+                            <span class="block text-4xl font-playfair italic font-bold text-terracotta-600">12</span>
+                            <span class="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-resto-400">Years of Pursuit</span>
+                        </div>
+                        <div class="w-[1px] h-12 bg-resto-200"></div>
+                        <div>
+                            <span class="block text-4xl font-playfair italic font-bold text-terracotta-600">03</span>
+                            <span class="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-resto-400">Michelin Stars</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reservation -->
+        <section id="book" class="bg-resto-950 py-32 px-6 relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10 flex items-center justify-center -z-0">
+                <span class="font-playfair text-[30rem] italic text-white select-none pointer-events-none">Resto</span>
+            </div>
+            
+            <div class="max-w-4xl mx-auto relative z-10 text-center space-y-16">
+                <div class="space-y-6">
+                    <h2 class="font-playfair text-6xl text-white italic">Reserve Your Space</h2>
+                    <p class="text-terracotta-400 font-bold uppercase tracking-[0.4em] text-[0.7rem]">Join us for an evening of quiet intensity</p>
+                </div>
+                
+                <form class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                    <div class="space-y-3">
+                        <label class="text-[0.6rem] font-bold uppercase tracking-[0.3em] text-resto-400 ml-1">Party Size</label>
+                        <select class="w-full bg-transparent border border-resto-800 p-5 text-white outline-none focus:border-terracotta-500 transition-colors uppercase text-xs tracking-widest cursor-pointer">
+                            <option>2 Table Seats</option>
+                            <option>4 Table Seats</option>
+                            <option>Hearth Counter (Reserved)</option>
+                        </select>
+                    </div>
+                    <div class="space-y-3">
+                        <label class="text-[0.6rem] font-bold uppercase tracking-[0.3em] text-resto-400 ml-1">Date</label>
+                        <input type="date" class="w-full bg-transparent border border-resto-800 p-5 text-white outline-none focus:border-terracotta-500 transition-colors uppercase text-xs tracking-widest">
+                    </div>
+                    <div class="space-y-3 md:col-span-2">
+                        <label class="text-[0.6rem] font-bold uppercase tracking-[0.3em] text-resto-400 ml-1">Special Requests</label>
+                        <textarea class="w-full bg-transparent border border-resto-800 p-5 text-white outline-none focus:border-terracotta-500 transition-colors uppercase text-xs tracking-widest h-32" placeholder="Dietary restrictions or special occasions..."></textarea>
+                    </div>
+                    <button class="md:col-span-2 bg-terracotta-700 text-white p-6 font-black uppercase tracking-[0.5em] text-[0.75rem] hover:bg-terracotta-800 transition-all shadow-2xl shadow-terracotta-900/40">Secure Reservation</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white py-24 border-t border-resto-100">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-20">
+            <div class="space-y-8">
+                <div class="text-2xl font-playfair font-bold italic text-terracotta-700">Resto One</div>
+                <p class="text-resto-500 text-sm font-light leading-relaxed italic">Pursuing the perfect marriage of smoke, soil, and soul since 2012.</p>
+            </div>
+            <div class="space-y-8">
+                <h6 class="text-[0.65rem] font-black uppercase tracking-[0.3em] text-resto-950">Location</h6>
+                <p class="text-resto-500 text-xs font-light tracking-widest leading-loose">142 Valley Estates Dr.<br>Tuscany Region, Italy<br>31204</p>
+            </div>
+            <div class="space-y-8">
+                <h6 class="text-[0.65rem] font-black uppercase tracking-[0.3em] text-resto-950">Connect</h6>
+                <div class="flex gap-6">
+                    <a href="#" class="text-resto-400 hover:text-terracotta-600 transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                    <a href="#" class="text-resto-400 hover:text-terracotta-600 transition-colors"><i class="fa-brands fa-facebook-f text-lg"></i></a>
+                    <a href="#" class="text-resto-400 hover:text-terracotta-600 transition-colors"><i class="fa-brands fa-twitter text-lg"></i></a>
+                </div>
+            </div>
+            <div class="space-y-8">
+                <h6 class="text-[0.65rem] font-black uppercase tracking-[0.3em] text-resto-950">Newsletter</h6>
+                <div class="border-b border-resto-200 pb-2 flex gap-4">
+                    <input type="email" placeholder="Email Address" class="bg-transparent text-[0.65rem] outline-none max-w-[120px] uppercase tracking-widest">
+                    <button class="text-terracotta-500 font-bold uppercase tracking-[0.2em] text-[0.65rem]">Join</button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 border-t border-resto-50 mt-20 pt-10 flex flex-col sm:flex-row justify-between text-[0.55rem] font-bold uppercase tracking-[0.3em] text-resto-400">
+            <span>&copy; 2024 Resto One Culinary Group</span>
+            <div class="space-x-8 mt-4 sm:mt-0">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Careers</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Pizza | Best Pizza in Town</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#fe5f1e',
+                        secondary: '#232323',
+                        background: '#f9f9f9',
+                        brandgray: '#f3f3f3',
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #ffdf8c; min-height: 100vh; padding: 50px 0; }
+        .wrapper { max-width: 1240px; width: calc(100% - 100px); background-color: #fff; margin: 0 auto; border-radius: 10px; min-height: calc(100vh - 100px); display: flex; flex-direction: column; }
+        .pizza-block__selector { background-color: #f3f3f3; border-radius: 10px; display: flex; flex-direction: column; padding: 6px; }
+        .pizza-block__selector ul { display: flex; flex: 1; }
+        .pizza-block__selector ul:first-of-type { margin-bottom: 6px; }
+        .pizza-block__selector ul li { padding: 8px; flex: 1; cursor: pointer; font-weight: 600; font-size: 14px; text-align: center; transition: all 0.15s ease-in-out; border-radius: 5px; }
+        .pizza-block__selector ul li.active { background-color: #fff; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04); }
+        .pizza-block__selector ul li.disabled { opacity: 0.2; pointer-events: none; }
+        .cart-btn-divider { width: 1px; height: 25px; background-color: rgba(255, 255, 255, 0.25); margin: 0 13px; }
+        .sort-popup { box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09); border-radius: 10px; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="wrapper shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <header class="border-b border-brandgray py-10 px-16">
+            <div class="container flex justify-between items-center ">
+                <div class="flex items-center gap-4 cursor-pointer" onclick="goToHome()">
+                    <img src="https://raw.githubusercontent.com/Archakov06/react-pizza-v2/master/src/assets/img/pizza-logo.svg" alt="Pizza Logo" class="w-10">
+                    <div>
+                        <h1 class="text-2xl font-black uppercase tracking-wider leading-none">React Pizza</h1>
+                        <p class="text-gray-400 text-sm">the best pizza in the world</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <!-- Search -->
+                    <div id="search-container" class="relative group hidden lg:block">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-300"></i>
+                        <input type="text" id="global-search" oninput="handleSearch(this.value)" placeholder="Search pizza..." 
+                            class="pl-12 pr-4 py-3 bg-gray-50 border border-transparent focus:border-primary/50 focus:bg-white rounded-2xl outline-none w-[300px] transition-all">
+                    </div>
+
+                    <!-- Cart Button -->
+                    <button id="header-cart-btn" onclick="goToCart()" class="bg-primary hover:bg-[#e24b0e] text-white flex items-center px-6 py-3 rounded-full font-bold transition-all active:scale-95">
+                        <span id="header-total-price">0 ₽</span>
+                        <div class="cart-btn-divider"></div>
+                        <i class="fa-solid fa-cart-shopping mr-2"></i>
+                        <span id="header-total-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content (Home View) -->
+        <main id="home-view" class="flex-grow p-10 lg:px-16 pb-20">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-8 mb-10">
+                <!-- Categories -->
+                <ul class="flex flex-wrap gap-2" id="category-filters">
+                    <!-- Dynamic -->
+                </ul>
+
+                <!-- Sort -->
+                <div class="relative">
+                    <div class="flex items-center gap-2 cursor-pointer group" onclick="toggleSort()">
+                        <i id="sort-arrow" class="fa-solid fa-caret-up text-primary transition-transform"></i>
+                        <b class="text-sm">Sort by:</b>
+                        <span id="current-sort" class="text-sm text-primary border-b border-dashed border-primary">popularity</span>
+                    </div>
+                    <div id="sort-popup" class="hidden absolute right-0 mt-3 w-32 bg-white sort-popup z-20 overflow-hidden">
+                        <ul class="text-sm">
+                            <li onclick="setSort('rating')" class="px-4 py-3 hover:bg-primary/5 hover:text-primary cursor-pointer font-bold">popularity</li>
+                            <li onclick="setSort('price')" class="px-4 py-3 hover:bg-primary/5 hover:text-primary cursor-pointer">price</li>
+                            <li onclick="setSort('title')" class="px-4 py-3 hover:bg-primary/5 hover:text-primary cursor-pointer">alphabet</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="text-3xl font-bold mb-10" id="view-title">All Pizzas</h2>
+
+            <!-- Grid -->
+            <div id="pizza-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-16">
+                <!-- Dynamic -->
+            </div>
+        </main>
+
+        <!-- Cart View -->
+        <main id="cart-view" class="hidden flex-grow p-10 lg:px-24 pb-20 animate-fade-in">
+            <div id="cart-content-full" class="max-w-3xl mx-auto hidden">
+                <div class="flex justify-between items-center mb-10">
+                    <h2 class="text-3xl font-bold flex items-center gap-4">
+                        <i class="fa-solid fa-cart-shopping"></i> Shopping Cart
+                    </h2>
+                    <button onclick="clearCart()" class="text-gray-400 hover:text-black flex items-center gap-2 transition-colors">
+                        <i class="fa-solid fa-trash-can"></i> Clear Cart
+                    </button>
+                </div>
+
+                <div id="cart-items-list" class="space-y-10 mb-10">
+                    <!-- Dynamic -->
+                </div>
+
+                <div class="flex justify-between items-center mb-10">
+                    <p class="text-xl">Total pizzas: <b id="cart-total-count-page">0 pcs.</b></p>
+                    <p class="text-xl">Order total: <b class="text-primary text-2xl" id="cart-total-price-page">0 ₽</b></p>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <button onclick="goToHome()" class="border-2 border-brandgray hover:bg-brandgray px-10 py-4 rounded-full font-bold transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-chevron-left"></i> Go back
+                    </button>
+                    <button class="bg-primary hover:bg-[#e24b0e] text-white px-10 py-4 rounded-full font-bold transition-all">Pay now</button>
+                </div>
+            </div>
+
+            <!-- Empty Cart -->
+            <div id="cart-empty" class="max-w-lg mx-auto text-center py-20 flex flex-col items-center">
+                <h2 class="text-3xl font-bold mb-6">Cart is empty 😕</h2>
+                <p class="text-gray-400 mb-10">You haven't ordered any pizza yet. <br> To order pizza, go to the main page.</p>
+                <img src="https://raw.githubusercontent.com/Archakov06/react-pizza-v2/master/src/assets/img/empty-cart.png" alt="Empty Cart" class="w-80 mb-10">
+                <button onclick="goToHome()" class="bg-secondary text-white px-10 py-3 rounded-full font-bold hover:scale-105 transition-all">Go back</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const pizzasData = [
+            { id: 0, imageUrl: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=500&h=500&fit=crop", title: "Pepperoni Fresh with Pepper", types: [0, 1], sizes: [26, 30, 40], price: 803, category: 0, rating: 4 },
+            { id: 1, imageUrl: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&h=500&fit=crop", title: "Cheese", types: [0], sizes: [26, 30, 40], price: 245, category: 1, rating: 6 },
+            { id: 2, imageUrl: "https://images.unsplash.com/photo-1574071318508-1cdbad80ad50?w=500&h=500&fit=crop", title: "BBQ Chicken", types: [0, 1], sizes: [26, 40], price: 295, category: 2, rating: 4 },
+            { id: 3, imageUrl: "https://images.unsplash.com/photo-1593504049359-7433010b0638?w=500&h=500&fit=crop", title: "Sweet Sour Chicken", types: [1], sizes: [26, 30, 40], price: 275, category: 2, rating: 2 },
+            { id: 4, imageUrl: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500&h=500&fit=crop", title: "Cheeseburger-Pizza", types: [0, 1], sizes: [26, 30, 40], price: 415, category: 3, rating: 8 },
+            { id: 5, imageUrl: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=500&h=500&fit=crop", title: "Grill Meat", types: [0], sizes: [30, 40], price: 585, category: 1, rating: 2 },
+            { id: 6, imageUrl: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?w=500&h=500&fit=crop", title: "Vegetarian", types: [0, 1], sizes: [26, 30, 40], price: 675, category: 4, rating: 9 },
+            { id: 7, imageUrl: "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=500&h=500&fit=crop", title: "Margarita", types: [0, 1], sizes: [26, 30, 40], price: 450, category: 4, rating: 10 },
+            { id: 8, imageUrl: "https://images.unsplash.com/photo-1594007654729-407eedc4be65?w=500&h=500&fit=crop", title: "Four Seasons", types: [0, 1], sizes: [26, 30, 40], price: 395, category: 5, rating: 10 },
+            { id: 9, imageUrl: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=500&h=500&fit=crop", title: "Crazy Pepperoni", types: [0], sizes: [30, 40], price: 580, category: 2, rating: 10 },
+        ];
+
+        const categories = ["All", "Meat", "Vegetarian", "Grill", "Spicy", "Closed"];
+        const typeNames = ["thin", "traditional"];
+
+        let cart = JSON.parse(localStorage.getItem('pizzaCart')) || [];
+        let activeCategory = 0;
+        let activeSort = 'rating';
+        let searchQuery = '';
+        let selections = {}; // Tracks local card selections: { pizzaId: { type: 0, size: 26 } }
+
+        function init() {
+            // Setup default selections for cards
+            pizzasData.forEach(p => {
+                selections[p.id] = { type: p.types[0], size: p.sizes[0] };
+            });
+
+            renderCategories();
+            renderPizzas();
+            updateHeader();
+        }
+
+        // --- View Logic ---
+        window.goToCart = () => {
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('cart-view').classList.remove('hidden');
+            renderCart();
+            window.scrollTo(0, 0);
+        };
+
+        window.goToHome = () => {
+            document.getElementById('home-view').classList.remove('hidden');
+            document.getElementById('cart-view').classList.add('hidden');
+            window.scrollTo(0, 0);
+        };
+
+        // --- Filter Logic ---
+        function renderCategories() {
+            const ul = document.getElementById('category-filters');
+            ul.innerHTML = categories.map((cat, idx) => `
+                <li onclick="setCategory(${idx})" 
+                    class="px-8 py-3 rounded-full font-bold cursor-pointer transition-all ${activeCategory === idx ? 'bg-secondary text-white' : 'bg-brandgray hover:bg-[#eaeaea]'}">
+                    ${cat}
+                </li>
+            `).join('');
+        }
+
+        window.setCategory = (idx) => {
+            activeCategory = idx;
+            renderCategories();
+            renderPizzas();
+        };
+
+        window.handleSearch = (val) => {
+            searchQuery = val.toLowerCase();
+            renderPizzas();
+        };
+
+        window.toggleSort = () => {
+            const popup = document.getElementById('sort-popup');
+            const arrow = document.getElementById('sort-arrow');
+            popup.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        };
+
+        window.setSort = (type) => {
+            activeSort = type;
+            document.getElementById('current-sort').innerText = (type === 'rating' ? 'popularity' : type === 'price' ? 'price' : 'alphabet');
+            toggleSort();
+            renderPizzas();
+        };
+
+        // --- Pizza List Logic ---
+        function renderPizzas() {
+            const grid = document.getElementById('pizza-grid');
+            let filtered = pizzasData.filter(p => {
+                const matchesCat = activeCategory === 0 || p.category === activeCategory;
+                const matchesSearch = p.title.toLowerCase().includes(searchQuery);
+                return matchesCat && matchesSearch;
+            });
+
+            // Sorting
+            filtered.sort((a, b) => {
+                if (activeSort === 'title') return a.title.localeCompare(b.title);
+                return b[activeSort] - a[activeSort];
+            });
+
+            grid.innerHTML = filtered.map(p => {
+                const sel = selections[p.id];
+                const count = getCardTotal(p.id);
+                return `
+                    <div class="flex flex-col items-center text-center animate-fade-in px-4">
+                        <img src="${p.imageUrl}" class="w-64 mb-4 hover:translate-y-2 transition-transform cursor-pointer" onclick="goToFullPizza(${p.id})">
+                        <h4 class="text-xl font-black mb-6 min-h-[56px]">${p.title}</h4>
+                        <div class="pizza-block__selector w-full mb-4">
+                            <ul>
+                                ${[0, 1].map(t => `
+                                    <li onclick="setSelection(${p.id}, 'type', ${t})" 
+                                        class="${!p.types.includes(t) ? 'disabled' : ''} ${sel.type === t ? 'active' : ''}">${typeNames[t]}</li>
+                                `).join('')}
+                            </ul>
+                            <ul>
+                                ${[26, 30, 40].map(s => `
+                                    <li onclick="setSelection(${p.id}, 'size', ${s})" 
+                                        class="${!p.sizes.includes(s) ? 'disabled' : ''} ${sel.size === s ? 'active' : ''}">${s} cm.</li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        <div class="flex justify-between items-center w-full mt-auto">
+                            <span class="text-2xl font-bold italic">from ${p.price} ₽</span>
+                            <button onclick="addToCart(${p.id})" class="border-2 border-primary text-primary hover:bg-primary hover:text-white px-4 py-2 rounded-full font-bold flex items-center transition-all active:scale-90">
+                                <i class="fa-solid fa-plus mr-1"></i> Add
+                                ${count > 0 ? `<span class="bg-primary text-white w-5 h-5 rounded-full text-[12px] flex items-center justify-center ml-2 border border-white">${count}</span>` : ''}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.setSelection = (id, field, val) => {
+            selections[id][field] = val;
+            renderPizzas();
+        };
+
+        // --- Cart Operations ---
+        window.addToCart = (id) => {
+            const p = pizzasData.find(x => x.id === id);
+            const sel = selections[id];
+            const cartId = `${id}-${sel.type}-${sel.size}`;
+            
+            const existing = cart.find(x => x.cartId === cartId);
+            if (existing) {
+                existing.count++;
+            } else {
+                cart.push({ ...p, cartId, type: sel.type, size: sel.size, count: 1 });
+            }
+            saveCart();
+            renderPizzas();
+            updateHeader();
+        };
+
+        window.updateCartCount = (cartId, delta) => {
+            const item = cart.find(x => x.cartId === cartId);
+            if (!item) return;
+            item.count += delta;
+            if (item.count <= 0) {
+                cart = cart.filter(x => x.cartId !== cartId);
+            }
+            saveCart();
+            renderCart();
+            renderPizzas();
+            updateHeader();
+        };
+
+        window.removeItem = (cartId) => {
+            cart = cart.filter(x => x.cartId !== cartId);
+            saveCart();
+            renderCart();
+            renderPizzas();
+            updateHeader();
+        };
+
+        window.clearCart = () => {
+            if (confirm("Clear cart?")) {
+                cart = [];
+                saveCart();
+                renderCart();
+                renderPizzas();
+                updateHeader();
+            }
+        };
+
+        function saveCart() {
+            localStorage.setItem('pizzaCart', JSON.stringify(cart));
+        }
+
+        function updateHeader() {
+            const totalPrice = cart.reduce((sum, x) => sum + (x.price * x.count), 0);
+            const totalCount = cart.reduce((sum, x) => sum + x.count, 0);
+            document.getElementById('header-total-price').innerText = `${totalPrice} ₽`;
+            document.getElementById('header-total-count').innerText = totalCount;
+            
+            // Toggle Visibility in head
+            const btn = document.getElementById('header-cart-btn');
+            // btn.classList.toggle('opacity-0', totalCount === 0);
+        }
+
+        function getCardTotal(id) {
+            return cart.reduce((sum, x) => x.id === id ? sum + x.count : sum, 0);
+        }
+
+        function renderCart() {
+            const fullView = document.getElementById('cart-content-full');
+            const emptyView = document.getElementById('cart-empty');
+            
+            if (cart.length === 0) {
+                fullView.classList.add('hidden');
+                emptyView.classList.remove('hidden');
+                return;
+            }
+
+            fullView.classList.remove('hidden');
+            emptyView.classList.add('hidden');
+
+            const list = document.getElementById('cart-items-list');
+            list.innerHTML = cart.map(item => `
+                <div class="flex items-center border-t border-brandgray pt-10">
+                    <div class="flex items-center gap-4 w-[45%]">
+                        <img src="${item.imageUrl}" class="w-20">
+                        <div>
+                            <h4 class="text-xl font-bold">${item.title}</h4>
+                            <p class="text-gray-400">${typeNames[item.type]} dough, ${item.size} cm.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 w-[15%]">
+                        <button onclick="updateCartCount('${item.cartId}', -1)" class="w-8 h-8 rounded-full border-2 border-primary text-primary flex items-center justify-center font-bold hover:bg-primary hover:text-white transition-all disabled:opacity-30">-</button>
+                        <b class="text-xl">${item.count}</b>
+                        <button onclick="updateCartCount('${item.cartId}', 1)" class="w-8 h-8 rounded-full border-2 border-primary text-primary flex items-center justify-center font-bold hover:bg-primary hover:text-white transition-all">+</button>
+                    </div>
+
+                    <b class="text-xl w-[25%] text-center">${item.price * item.count} ₽</b>
+
+                    <div class="w-[15%] flex justify-end">
+                        <button onclick="removeItem('${item.cartId}')" class="w-10 h-10 rounded-full border-2 border-brandgray text-gray-300 flex items-center justify-center hover:bg-gray-800 hover:text-white transition-all">
+                             <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            const totalPrice = cart.reduce((sum, x) => sum + (x.price * x.count), 0);
+            const totalCount = cart.reduce((sum, x) => sum + x.count, 0);
+            document.getElementById('cart-total-count-page').innerText = `${totalCount} pcs.`;
+            document.getElementById('cart-total-price-page').innerText = `${totalPrice} ₽`;
+        }
+
+        init();
+    </script>
+</body>
+</html>
