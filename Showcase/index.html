@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Lumina Digital - Showcase</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#842bd2",
+                      "on-primary-fixed-variant": "#6900b3",
+                      "error-container": "#93000a",
+                      "surface-tint": "#ddb7ff",
+                      "on-error": "#690005",
+                      "on-secondary": "#002e6a",
+                      "surface-container-highest": "#2d3449",
+                      "primary": "#ddb7ff",
+                      "surface-container-low": "#131b2e",
+                      "primary-fixed-dim": "#ddb7ff",
+                      "tertiary-fixed": "#ffdead",
+                      "inverse-on-surface": "#283044",
+                      "on-surface-variant": "#cfc2d6",
+                      "on-primary-container": "#400071",
+                      "background": "#0b1326",
+                      "outline-variant": "#4d4354",
+                      "secondary": "#adc6ff",
+                      "surface-bright": "#31394d",
+                      "surface-container-high": "#222a3d",
+                      "on-primary-fixed": "#2c0051",
+                      "on-tertiary-fixed-variant": "#604100",
+                      "tertiary-container": "#bd871a",
+                      "on-secondary-fixed-variant": "#004395",
+                      "surface-container": "#171f33",
+                      "surface": "#0b1326",
+                      "outline": "#988d9f",
+                      "on-surface": "#dae2fd",
+                      "tertiary": "#fabc4e",
+                      "on-tertiary": "#432c00",
+                      "on-tertiary-container": "#3a2600",
+                      "primary-fixed": "#f0dbff",
+                      "on-error-container": "#ffdad6",
+                      "on-secondary-container": "#e6ecff",
+                      "secondary-fixed-dim": "#adc6ff",
+                      "on-secondary-fixed": "#001a42",
+                      "surface-variant": "#2d3449",
+                      "tertiary-fixed-dim": "#fabc4e",
+                      "on-background": "#dae2fd",
+                      "surface-dim": "#0b1326",
+                      "secondary-fixed": "#d8e2ff",
+                      "inverse-surface": "#dae2fd",
+                      "surface-container-lowest": "#060e20",
+                      "primary-container": "#b76dff",
+                      "on-tertiary-fixed": "#281900",
+                      "secondary-container": "#0566d9",
+                      "on-primary": "#490080",
+                      "error": "#ffb4ab"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "0.25rem",
+                      "gutter": "1.5rem",
+                      "lg": "1.5rem",
+                      "sm": "0.5rem",
+                      "xl": "2.5rem",
+                      "margin": "2rem",
+                      "md": "1rem",
+                      "xxl": "5rem"
+              },
+              "fontFamily": {
+                      "h3": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "h1": ["Inter"],
+                      "h2": ["Inter"],
+                      "label-md": ["Inter"],
+                      "display": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "h3": ["24px", { "lineHeight": "1.4", "letterSpacing": "0em", "fontWeight": "600" }],
+                      "label-sm": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                      "h1": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                      "h2": ["30px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                      "label-md": ["14px", { "lineHeight": "1.0", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                      "display": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                      "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                      "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }]
+              }
+            },
+          },
+        }
+    </script>
+    <style>
+        .glass-edge {
+            box-shadow: inset 1px 1px 0px 0px rgba(255, 255, 255, 0.1);
+        }
+        .glow-shadow {
+            box-shadow: 0 0 40px -10px rgba(168, 85, 247, 0.2), 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+        .glow-shadow:hover {
+            box-shadow: 0 0 60px -10px rgba(168, 85, 247, 0.4), 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+        }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(221, 183, 255, 0.5);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #ddb7ff, #adc6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* View Transitions */
+        .page-view {
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+        .page-view.hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        /* Device Preview Resizing */
+        #preview-container {
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col antialiased">
+
+    <!-- Template Gallery - Home -->
+    <div id="gallery-view" class="page-view flex-grow flex flex-col">
+        <!-- TopNavBar -->
+        <nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/10 shadow-sm">
+            <div class="flex justify-between items-center px-gutter py-md max-w-7xl mx-auto w-full">
+                <div class="font-display text-h3 font-bold text-on-surface tracking-tight">
+                    Lumina Digital
+                </div>
+                <div class="hidden md:flex items-center gap-lg font-body-md text-body-md">
+                    <a class="text-primary font-bold border-b-2 border-primary pb-1 active:scale-95 duration-200" href="#">Gallery</a>
+                    <a class="text-on-surface-variant hover:text-on-surface transition-colors hover:opacity-80 transition-all active:scale-95 duration-200" href="#">Services</a>
+                    <a class="text-on-surface-variant hover:text-on-surface transition-colors hover:opacity-80 transition-all active:scale-95 duration-200" href="#">Process</a>
+                    <a class="text-on-surface-variant hover:text-on-surface transition-colors hover:opacity-80 transition-all active:scale-95 duration-200" href="#">Case Studies</a>
+                </div>
+                <div class="flex items-center gap-md">
+                    <button class="bg-gradient-to-r from-primary-container to-secondary-container text-white px-lg py-sm rounded-full font-label-md text-label-md glow-shadow transition-all hover:scale-105 active:scale-95">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <main class="flex-grow pt-xxl mt-xl px-gutter max-w-7xl mx-auto w-full">
+            <!-- Hero Section -->
+            <section class="text-center py-xxl mb-xl relative">
+                <div class="absolute inset-0 bg-gradient-to-b from-primary-container/10 to-transparent blur-3xl -z-10 rounded-full w-3/4 mx-auto h-full pointer-events-none"></div>
+                <h1 class="font-display text-display mb-md tracking-tight gradient-text text-glow">AI-Powered Web Templates</h1>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-xl">
+                    Bespoke digital experiences crafted with precision. Explore our gallery of premium, high-performance templates designed for the modern web.
+                </p>
+                <button class="bg-gradient-to-r from-primary-container to-secondary-container text-white px-xl py-md rounded-full font-h3 text-h3 glow-shadow transition-all hover:scale-105 active:scale-95 flex items-center gap-sm mx-auto">
+                    Hire Us
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+                </button>
+            </section>
+            
+            <!-- Filter Bar -->
+            <section class="mb-xl flex flex-wrap justify-center gap-sm">
+                <button class="px-lg py-sm rounded-full bg-primary/20 text-primary border border-primary/50 font-label-md text-label-md transition-all hover:bg-primary/30 glass-edge">All</button>
+                <button class="px-lg py-sm rounded-full bg-white/5 text-on-surface-variant border border-white/10 font-label-md text-label-md transition-all hover:text-on-surface hover:bg-white/10 glass-edge backdrop-blur-md">E-commerce</button>
+                <button class="px-lg py-sm rounded-full bg-white/5 text-on-surface-variant border border-white/10 font-label-md text-label-md transition-all hover:text-on-surface hover:bg-white/10 glass-edge backdrop-blur-md">Landing Page</button>
+                <button class="px-lg py-sm rounded-full bg-white/5 text-on-surface-variant border border-white/10 font-label-md text-label-md transition-all hover:text-on-surface hover:bg-white/10 glass-edge backdrop-blur-md">Dashboards</button>
+                <button class="px-lg py-sm rounded-full bg-white/5 text-on-surface-variant border border-white/10 font-label-md text-label-md transition-all hover:text-on-surface hover:bg-white/10 glass-edge backdrop-blur-md">Next.js</button>
+                <button class="px-lg py-sm rounded-full bg-white/5 text-on-surface-variant border border-white/10 font-label-md text-label-md transition-all hover:text-on-surface hover:bg-white/10 glass-edge backdrop-blur-md">React</button>
+            </section>
+            
+            <!-- Template Grid -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg mb-xxl">
+                <!-- Card 1 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="Bella Cucina" data-url="https://MrTusharkumar.github.io/bella-cucina">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-primary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="Bella Cucina" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res1.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Bella Cucina</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">Authentic Italian dining experience with a modern digital touch.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Restaurant</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Italian</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="Bistro Boss" data-url="https://MrTusharkumar.github.io/bistro-boss">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-secondary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="Bistro Boss" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res2.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Bistro Boss</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">A high-performance bistro landing page with elegant animations.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Bistro</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Modern</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="Cocktail" data-url="https://MrTusharkumar.github.io/cocktail">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-primary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="Cocktail" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res1.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Cocktail</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">Vibrant and interactive menu for premium cocktail lounges.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Lounge</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Bar</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="Dineflex" data-url="https://MrTusharkumar.github.io/dineflex">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-secondary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="Dineflex" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res2.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Dineflex</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">Flexible dining solutions for fast-paced urban restaurants.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Casual</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Flexible</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="Food Ordering App" data-url="https://MrTusharkumar.github.io/food-ordering-app">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-primary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="Food Ordering App" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res1.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Food Ordering App</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">A seamless food ordering interface optimized for mobile and web.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Ordering</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Mobile</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 6 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="Pizza Man" data-url="https://MrTusharkumar.github.io/pizza-man">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-secondary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="Pizza Man" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res2.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Pizza Man</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">Dynamic pizza builder and ordering system for local pizzerias.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Pizza</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Builder</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 7 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="Pizza Time (React)" data-url="https://MrTusharkumar.github.io/pizza-time-with-react">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-primary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="Pizza Time (React)" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res1.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Pizza Time</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">Full-featured React application for pizza delivery services.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">React</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Delivery</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 8 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="Pizza" data-url="https://MrTusharkumar.github.io/pizza">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-secondary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="Pizza" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res2.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Classic Pizza</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">Traditional pizza parlor design with focus on local heritage.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Classic</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Local</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 9 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="PizzaFlow" data-url="https://MrTusharkumar.github.io/pizzaflow">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-primary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="PizzaFlow" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res1.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">PizzaFlow</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">Modern workflow-optimized ordering system for high-volume pizzerias.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Workflow</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Scalable</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 10 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="React Pizza" data-url="https://MrTusharkumar.github.io/react-pizza">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-secondary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="React Pizza" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res2.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">React Pizza Hub</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">Component-based pizza store with real-time state management.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">React</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">State</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 11 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="React Restaurant" data-url="https://MrTusharkumar.github.io/react-restaurant-website">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-primary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="React Restaurant" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res1.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Elite React Dining</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">Sophisticated restaurant portal built with cutting-edge React features.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">React</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Premium</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 12 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="Restro" data-url="https://MrTusharkumar.github.io/restro">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-secondary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="Restro" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res2.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Restro Pro</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">Complete restaurant management and booking interface.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Pro</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Booking</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 13 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="Savor Sphere" data-url="https://MrTusharkumar.github.io/savor-sphere">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-primary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="Savor Sphere" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res1.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Savor Sphere</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">Immersive dining experiences showcased in a spherical, modern layout.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Immersive</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Savor</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 14 -->
+                <div class="template-card group bg-surface-container-high rounded-xl overflow-hidden glass-edge transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] cursor-pointer relative" data-title="Template" data-url="https://MrTusharkumar.github.io/template">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-container/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:bg-secondary-container/40 transition-all duration-500"></div>
+                    <div class="aspect-video bg-surface-container-lowest overflow-hidden relative">
+                        <img alt="Base Template" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300" src="assets/res2.png"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface-container-high to-transparent opacity-60"></div>
+                    </div>
+                    <div class="p-lg relative z-10">
+                        <h3 class="font-h3 text-h3 text-on-surface mb-sm group-hover:text-primary transition-colors">Universal Template</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md line-clamp-2">A versatile, highly customizable base template for any culinary brand.</p>
+                        <div class="flex flex-wrap gap-xs">
+                            <span class="bg-white/10 text-on-surface px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Universal</span>
+                            <span class="bg-secondary-container/20 text-secondary px-sm py-xs rounded-full font-label-sm text-label-sm backdrop-blur-sm">Base</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="bg-surface-container-lowest mt-auto w-full">
+            <div class="flex flex-col md:flex-row justify-between items-center px-gutter py-xl border-t border-outline-variant w-full max-w-7xl mx-auto">
+                <div class="font-display text-h3 text-on-surface mb-md md:mb-0">
+                    Lumina Digital
+                </div>
+                <div class="flex flex-wrap justify-center gap-lg font-label-sm text-label-sm text-on-surface-variant mb-md md:mb-0">
+                    <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+                    <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+                    <a class="hover:text-primary transition-colors" href="#">Cookie Policy</a>
+                    <a class="hover:text-primary transition-colors" href="#">Contact Us</a>
+                </div>
+                <div class="font-label-sm text-label-sm text-on-surface-variant">
+                    © 2024 Lumina Digital Atelier. All rights reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Live Preview Explorer -->
+    <div id="preview-view" class="page-view hidden h-screen flex flex-col bg-background overflow-hidden">
+        <!-- Top Navigation Bar -->
+        <header class="flex-none h-[72px] bg-surface-container-low/80 backdrop-blur-xl border-b border-outline-variant/30 flex items-center justify-between px-gutter z-50">
+            <!-- Left: Back Action -->
+            <div class="flex-1 flex justify-start">
+                <button id="back-to-gallery" class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group">
+                    <span class="material-symbols-outlined text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                    <span class="font-label-md text-label-md">Back to Gallery</span>
+                </button>
+            </div>
+            <!-- Center: Device Toggles -->
+            <div class="flex-none flex items-center p-1 bg-surface-container-high rounded-lg border border-outline-variant/50 shadow-inner">
+                <button id="device-desktop" aria-label="Desktop View" class="device-toggle flex items-center justify-center p-1.5 min-w-[40px] rounded-md bg-secondary-container text-on-secondary-container shadow-sm transition-all">
+                    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">desktop_windows</span>
+                </button>
+                <button id="device-tablet" aria-label="Tablet View" class="device-toggle flex items-center justify-center p-1.5 min-w-[40px] rounded-md text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-all">
+                    <span class="material-symbols-outlined text-[20px]">tablet_mac</span>
+                </button>
+                <button id="device-mobile" aria-label="Mobile View" class="device-toggle flex items-center justify-center p-1.5 min-w-[40px] rounded-md text-on-surface-variant hover:text-on-surface hover:bg-surface-bright transition-all">
+                    <span class="material-symbols-outlined text-[20px]">smartphone</span>
+                </button>
+            </div>
+            <!-- Right: Primary Action -->
+            <div class="flex-1 flex justify-end">
+                <button class="px-6 py-2.5 bg-gradient-to-r from-primary-container to-inverse-primary text-white rounded-full font-label-md text-label-md shadow-[0_0_15px_rgba(168,85,247,0.2)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
+                    Purchase / Hire Us
+                    <span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="flex-1 flex justify-center items-center p-4 md:p-8 overflow-hidden relative" style="background-image: radial-gradient(circle at center, #4d4354 1px, transparent 1px); background-size: 24px 24px;">
+            <!-- Mock Iframe Container -->
+            <div id="preview-container" class="w-full h-full max-w-[1280px] bg-[#ffffff] rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-700 ease-in-out border border-outline-variant/50 flex flex-col relative z-10">
+                <!-- Live Iframe Container -->
+                <div class="flex-1 bg-white overflow-hidden flex flex-col font-sans text-gray-800 relative">
+                    <iframe id="preview-iframe" class="w-full h-full border-none" src="about:blank"></iframe>
+                    <!-- Loading Overlay -->
+                    <div id="preview-loader" class="absolute inset-0 bg-surface flex items-center justify-center z-20">
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+                            <p class="font-label-md text-label-md text-on-surface-variant">Loading Preview...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // State Management
+        const galleryView = document.getElementById('gallery-view');
+        const previewView = document.getElementById('preview-view');
+        const previewContainer = document.getElementById('preview-container');
+        const previewIframe = document.getElementById('preview-iframe');
+        const previewLoader = document.getElementById('preview-loader');
+        
+        // Navigation Functions
+        function showPreview(title, url) {
+            galleryView.classList.add('hidden');
+            previewView.classList.remove('hidden');
+            
+            // Load iframe
+            previewLoader.style.display = 'flex';
+            previewIframe.src = url;
+            
+            previewIframe.onload = () => {
+                previewLoader.style.display = 'none';
+            };
+            
+            window.scrollTo(0, 0);
+        }
+
+        function showGallery() {
+            previewView.classList.add('hidden');
+            galleryView.classList.remove('hidden');
+            previewIframe.src = 'about:blank'; // Clear iframe memory
+            window.scrollTo(0, 0);
+        }
+
+        // Event Listeners
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const title = card.getAttribute('data-title');
+                const url = card.getAttribute('data-url');
+                showPreview(title, url);
+            });
+        });
+
+        document.getElementById('back-to-gallery').addEventListener('click', showGallery);
+
+        // Device Toggles
+        const deviceButtons = {
+            'device-desktop': '1280px',
+            'device-tablet': '768px',
+            'device-mobile': '375px'
+        };
+
+        Object.keys(deviceButtons).forEach(id => {
+            document.getElementById(id).addEventListener('click', () => {
+                // Update container width
+                previewContainer.style.maxWidth = deviceButtons[id];
+                
+                // Update active button state
+                Object.keys(deviceButtons).forEach(btnId => {
+                    const btn = document.getElementById(btnId);
+                    if (btnId === id) {
+                        btn.classList.add('bg-secondary-container', 'text-on-secondary-container', 'shadow-sm');
+                        btn.classList.remove('text-on-surface-variant', 'hover:text-on-surface', 'hover:bg-surface-bright');
+                        btn.querySelector('span').style.fontVariationSettings = "'FILL' 1";
+                    } else {
+                        btn.classList.remove('bg-secondary-container', 'text-on-secondary-container', 'shadow-sm');
+                        btn.classList.add('text-on-surface-variant', 'hover:text-on-surface', 'hover:bg-surface-bright');
+                        btn.querySelector('span').style.fontVariationSettings = "'FILL' 0";
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
